@@ -184,6 +184,14 @@ const DICT = {
   'cm.field.confidence': ['Candidate confidence', '候选置信级', '候選置信級'],
   'cm.field.provenance': ['Alignment provenance', '对齐溯源', '對齊溯源'],
   'cm.available': ['Available', '可溯', '可溯'],
+  'cm.plain': ['Source (unpunctuated)', '白文（原貌）', '白文（原貌）'],
+  'cm.punctuated': ['Editorial punctuation', '編者句讀', '編者句讀'],
+  'cm.punct.note': [
+    'This work is transmitted unpunctuated. The punctuated reading is editorial, inserts marks only — removing them restores the source character for character — and has not been reviewed by a human editor.',
+    '此书原为白文传本。所示句读为编者所加，仅插入标点：去除标点即可逐字还原原文；该读法尚未经人工审核。',
+    '此書原為白文傳本。所示句讀為編者所加，僅插入標點：去除標點即可逐字還原原文；該讀法尚未經人工審核。',
+  ],
+  'cm.punct.marks': ['marks inserted', '处标点', '處標點'],
 
   // variants ----------------------------------------------------------------
   'vr.title': ['Textual Variants', '异文对勘', '異文對勘'],

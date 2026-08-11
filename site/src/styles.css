@@ -565,6 +565,20 @@ button { font: inherit; color: inherit; }
 .comm-card__sim { font-family: var(--mono); font-size: 0.63rem; color: var(--ink-3); margin-top: 0.3rem; }
 
 .comm-read { margin-top: 1.5rem; padding: 1.5rem; }
+
+/* 白文 / 句讀 switch on works transmitted without punctuation. */
+.punct-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 1rem; }
+.punct-switch button {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.28rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+.punct-switch button[data-on='true'] { border-color: var(--gold); background: var(--gold-soft); color: var(--gold); }
+.punct-switch__n { font-size: 0.68rem; color: var(--ink-3); margin-left: 0.2rem; }
 .comm-read__text { font-family: var(--han); font-size: 1.02rem; line-height: 2.1; margin-top: 1.1rem; text-align: justify; }
 .comm-read__seal {
   float: right;

@@ -25,6 +25,15 @@ jobs:
       - name: Source file checksums
         run: python3 code/verify_checksums.py
 
+      # Rebuild the editorial punctuation layer from its readings and prove the
+      # result only ever inserts marks into the released commentary text.
+      - name: Editorial punctuation is insertion-only
+        run: |
+          python3 scripts/build_punctuation_layer.py
+          git diff --exit-code -- 10_editorial_punctuation/ \
+            || (echo "::error::10_editorial_punctuation/ is out of date; run scripts/build_punctuation_layer.py" && exit 1)
+          python3 code/validate_punctuation.py
+
       - name: Build the site payloads
         run: python3 scripts/build_demo_data.py
 

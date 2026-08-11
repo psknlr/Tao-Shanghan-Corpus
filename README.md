@@ -214,6 +214,47 @@ python3 code/validate_relations.py
 python3 code/verify_checksums.py
 ```
 
+## Editorial punctuation (句讀)
+
+One catalogued work is transmitted **unpunctuated**. The upstream transcription of
+黃元御《傷寒懸解》(`SHSRC0013`) is 白文: all 48 of its commentary records carry zero
+sentence punctuation across 5,618 characters, against 0.157–0.218 marks per character in
+every other work. It is a property of that one transmission, not scattered noise.
+
+Punctuating classical Chinese is **interpretation, not transcription** — where a passage
+is broken changes what it says, and editors disagree. The editorial reading is therefore
+kept in its own layer and the historical text is never modified:
+
+```
+04_commentaries/commentaries.jsonl     commentary_text   ← unchanged, byte for byte
+10_editorial_punctuation/punctuation.jsonl
+                                       punctuated_text   ← parallel editorial reading
+```
+
+- **Insertions only.** The layer may introduce nothing but `，。；：、？！`.
+  [`code/validate_punctuation.py`](code/validate_punctuation.py) strips those marks back
+  out and requires the result to equal the released `commentary_text` character for
+  character; it also re-checks each record against a stored `base_sha256`. A reading that
+  altered, added or dropped one character of the source fails the build. This runs in CI
+  on every push.
+- **37 records, 900 marks.** The remaining 11 records of the work carry no running prose
+  — ten are bare section headings and one is a dose list delimited by full-width spaces —
+  so they are deliberately absent. A heading takes no punctuation.
+- **Attributed and unreviewed.** Every record carries `method = editorial_llm_assisted`,
+  an empty `editor_id` and `review_status = pending`, consistent with the rest of v1.0.
+  The reading has not been checked by a human editor and is not presented as authoritative.
+
+In the explorer, works with an editorial reading get a 編者句讀 / 白文 switch, and the
+punctuated view is labelled as editorial wherever it is shown.
+
+To rebuild the layer after editing the readings in
+[`scripts/punctuation_source.py`](scripts/punctuation_source.py):
+
+```bash
+python3 scripts/build_punctuation_layer.py   # refuses to write a non-insertion-only reading
+python3 code/validate_punctuation.py
+```
+
 ## Download counts
 
 Downloads are counted, and the running total is shown in the Data Access section of the

@@ -130,6 +130,14 @@ def build(root: Path, out: Path) -> None:
 
     validation = json.loads((root / "09_validation" / "validation_report.json").read_text(encoding="utf-8"))
 
+    # Editorial punctuation is an optional overlay: absent for most works, and
+    # absent entirely if the layer has not been built.
+    punctuation_path = root / "10_editorial_punctuation" / "punctuation.jsonl"
+    punctuation = {
+        record["commentary_id"]: record
+        for record in (read_jsonl(punctuation_path) if punctuation_path.exists() else [])
+    }
+
     source_by_id = {s["source_id"]: s for s in sources}
     files_by_source: dict[str, list[dict]] = defaultdict(list)
     for row in manifest:
@@ -437,8 +445,9 @@ def build(root: Path, out: Path) -> None:
                 c["commentary_id"],
             ),
         )
-        commentary_payload = [
-            {
+        commentary_payload = []
+        for c in clause_commentaries:
+            entry = {
                 "commentary_id": c["commentary_id"],
                 "commentator": c["commentator"],
                 "book": c["book"],
@@ -453,8 +462,15 @@ def build(root: Path, out: Path) -> None:
                 "source_resolution": c["source_resolution"],
                 "review_status": c["review_status"],
             }
-            for c in clause_commentaries
-        ]
+            # The unpunctuated source stays in `text`; the editorial reading is a
+            # separate field so the client can show either and label which is which.
+            reading = punctuation.get(c["commentary_id"])
+            if reading:
+                entry["punctuated_text"] = reading["punctuated_text"]
+                entry["punctuation_method"] = reading["method"]
+                entry["punctuation_review_status"] = reading["review_status"]
+                entry["punctuation_marks_added"] = reading["marks_added"]
+            commentary_payload.append(entry)
 
         variant_payload = []
         for v in sorted(variants_by_clause.get(cid, []), key=lambda v: -float(v["similarity"])):

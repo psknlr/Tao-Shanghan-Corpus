@@ -197,6 +197,12 @@ export interface CommentaryRecord {
   candidate_confidence: string
   source_resolution: string
   review_status: string
+  /** Editorial 句讀 of an unpunctuated (白文) transmission; absent where the source
+   *  is already punctuated. Insertions only — see 10_editorial_punctuation/. */
+  punctuated_text?: string
+  punctuation_method?: string
+  punctuation_review_status?: string
+  punctuation_marks_added?: number
 }
 
 /** One run of the build-time collation: shared text, base-only text, or witness-only text. */

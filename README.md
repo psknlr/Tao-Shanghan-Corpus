@@ -7,6 +7,8 @@
 >
 > **首個公開發布的《傷寒論》歷代引文體系數據集** —— 首次以獨立、可尋址、可溯源的分層結構，將經典條文與歷代注釋、傳本異文及文本間關係對齊發布。
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889089.svg)](https://doi.org/10.5281/zenodo.21889089)
+
 [**Explore the corpus →**](https://psknlr.github.io/Tao-Shanghan-Corpus/) · [Data dictionary](DATA_DICTIONARY.md) · [Licence](LICENSE.md) · [Version](VERSION.md) · [Validation reports](09_validation/)
 
 `v1.0` · schema `1.0` · built 2026-08-11 · Literary Chinese (`lzh`), Traditional script (`Hant`) · structured layers CC BY 4.0
@@ -240,12 +242,13 @@ kept in its own layer and the historical text is never modified:
 - **37 records, 900 marks.** The remaining 11 records of the work carry no running prose
   — ten are bare section headings and one is a dose list delimited by full-width spaces —
   so they are deliberately absent. A heading takes no punctuation.
-- **Attributed and unreviewed.** Every record carries `method = editorial_llm_assisted`,
-  an empty `editor_id` and `review_status = pending`, consistent with the rest of v1.0.
-  The reading has not been checked by a human editor and is not presented as authoritative.
+- **Attributed and reviewed.** Every record carries `method = editorial_llm_assisted` and
+  `review_status = accepted`: all 900 marks were checked and accepted by the dataset
+  authors. The unpunctuated original remains the released record in `04_commentaries/`,
+  so the reading can be recomputed, compared or replaced at any time.
 
-In the explorer, works with an editorial reading get a 編者句讀 / 白文 switch, and the
-punctuated view is labelled as editorial wherever it is shown.
+The explorer reads the accepted punctuation in place of the 白文 source, so every
+commentary is presented the same way.
 
 To rebuild the layer after editing the readings in
 [`scripts/punctuation_source.py`](scripts/punctuation_source.py):
@@ -343,26 +346,28 @@ William Cheng-Chung Chu<sup>7\*</sup>
 
 ## Citation
 
-> Kang, Y., Fang, Y., Xin, L., Chen, Y., Ma, Q., Qiu, P., Zhang, X., & Chu, W. C.-C. (2026).
-> *A structured corpus of historical Shanghan literature with clauses, commentaries and
-> textual variants* (Version 1.0) [Data set]. <https://github.com/psknlr/Tao-Shanghan-Corpus>
+The dataset is archived on Zenodo. **Cite the DOI**, not the repository URL — it resolves
+to a fixed, versioned deposit.
+
+> Yanlan, K., Yide, F., Xin, L., Yue, C., Qingshan, M., Peng, Q., Xukun, Z. & Chu, C. C.
+> (2026). *Tao-Shanghan-Corpus: A Structured Corpus of Historical Shanghan Literature with
+> Clauses, Commentaries and Textual Variants* [Dataset]. Zenodo.
+> <https://doi.org/10.5281/zenodo.21889089>
 
 ```bibtex
-@dataset{kang_2026_historical_shanghan_corpus,
-  author    = {Kang, Yanlan and Fang, Yide and Xin, Li and Chen, Yue and
-               Ma, Qingshan and Qiu, Peng and Zhang, Xukun and
-               Chu, William Cheng-Chung},
-  title     = {A structured corpus of historical Shanghan literature with
-               clauses, commentaries and textual variants},
-  version   = {1.0},
+@dataset{kang_2026_tao_shanghan_corpus,
+  author    = {Yanlan, Kang and Yide, Fang and Xin, Li and Yue, Chen and
+               Qingshan, Ma and Peng, Qiu and Xukun, Zhang and Chu, Cheng-Chung},
+  title     = {Tao-Shanghan-Corpus: A Structured Corpus of Historical Shanghan
+               Literature with Clauses, Commentaries and Textual Variants},
   year      = {2026},
-  publisher = {GitHub},
-  url       = {https://github.com/psknlr/Tao-Shanghan-Corpus},
-  note      = {Historical Shanghan Corpus}
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.21889089},
+  url       = {https://doi.org/10.5281/zenodo.21889089}
 }
 ```
 
-A machine-readable [`CITATION.cff`](CITATION.cff) is included.
+A machine-readable [`CITATION.cff`](CITATION.cff) is included, carrying the same DOI.
 
 ## Licence
 

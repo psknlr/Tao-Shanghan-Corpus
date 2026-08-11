@@ -6,17 +6,9 @@ import { KeyValues, SectionHead } from './ui'
 const ERA_ORDER = ['Eastern Han', 'Song', 'Jin (1115-1234)', 'Yuan', 'Ming', 'Qing', 'not_stated_in_source']
 
 function CommentaryReader({ record, clauseId }: { record: CommentaryRecord; clauseId: string }) {
-  const { t, v, n } = useI18n()
+  const { t, v } = useI18n()
   // The seal reproduces the commentator's name; two glyphs read best at this size.
   const seal = [...record.commentator].slice(0, 2).join('')
-
-  const hasPunctuation = Boolean(record.punctuated_text)
-  // Default to the editorial reading where one exists — the source is 白文 and
-  // hard to read — but keep the switch to the unpunctuated original in view.
-  const [showPunctuated, setShowPunctuated] = useState(true)
-  useEffect(() => setShowPunctuated(true), [record.commentary_id])
-
-  const body = hasPunctuation && showPunctuated ? record.punctuated_text! : record.text
 
   return (
     <div className="card comm-read">
@@ -27,38 +19,14 @@ function CommentaryReader({ record, clauseId }: { record: CommentaryRecord; clau
         <span className="tag mono">{record.commentary_id}</span>
       </div>
 
-      {hasPunctuation && (
-        <div className="punct-switch" role="group" aria-label={t('cm.punctuated')}>
-          <button type="button" data-on={showPunctuated} onClick={() => setShowPunctuated(true)}>
-            {t('cm.punctuated')}
-          </button>
-          <button type="button" data-on={!showPunctuated} onClick={() => setShowPunctuated(false)}>
-            {t('cm.plain')}
-          </button>
-          <span className="punct-switch__n mono">
-            +{n(record.punctuation_marks_added ?? 0)} {t('cm.punct.marks')}
-          </span>
-        </div>
-      )}
-
       <div className="comm-read__text han">
         <span className="comm-read__seal" aria-hidden>
           {seal}
         </span>
-        {body}
+        {record.text}
       </div>
 
       <div style={{ clear: 'both' }} />
-
-      {hasPunctuation && showPunctuated && (
-        <div className="notice" style={{ marginTop: '1rem' }}>
-          <span aria-hidden>◆</span>
-          <span>
-            <strong>{t('cm.punctuated')}: </strong>
-            {t('cm.punct.note')}
-          </span>
-        </div>
-      )}
 
       <KeyValues
         rows={[

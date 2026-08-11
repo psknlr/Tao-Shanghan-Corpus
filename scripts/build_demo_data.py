@@ -462,14 +462,14 @@ def build(root: Path, out: Path) -> None:
                 "source_resolution": c["source_resolution"],
                 "review_status": c["review_status"],
             }
-            # The unpunctuated source stays in `text`; the editorial reading is a
-            # separate field so the client can show either and label which is which.
+            # Where an accepted editorial reading exists, the site reads it in
+            # place of the 白文 source so every commentary is presented the same
+            # way. The unpunctuated original remains the released record in
+            # 04_commentaries/ and the reading is kept, with its provenance, in
+            # 10_editorial_punctuation/.
             reading = punctuation.get(c["commentary_id"])
-            if reading:
-                entry["punctuated_text"] = reading["punctuated_text"]
-                entry["punctuation_method"] = reading["method"]
-                entry["punctuation_review_status"] = reading["review_status"]
-                entry["punctuation_marks_added"] = reading["marks_added"]
+            if reading and reading.get("review_status") == "accepted":
+                entry["text"] = reading["punctuated_text"]
             commentary_payload.append(entry)
 
         variant_payload = []

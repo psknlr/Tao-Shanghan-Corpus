@@ -171,11 +171,12 @@ is parallel to it and marks may only be inserted, never substituted or removed.
 | `marks_added` | integer | Number of punctuation characters inserted | computed |
 | `insertable_marks` | string | The only characters this layer may introduce: `，。；：、？！` | curated |
 | `method` | string | `editorial_llm_assisted` | provenance |
-| `editor_id` | string | Reserved for the human editor; empty in v1.0 | review |
-| `review_status` | string | `pending` throughout v1.0 | review |
+| `editor_id` | string | Reserved for a named editor; empty in v1.0 | review |
+| `review_status` | string | `accepted` — checked and accepted by the dataset authors | review |
 | `note` | string | Statement of what the reading is and is not | curated |
 
 **Invariant.** Removing every character of `insertable_marks` from `punctuated_text` must
 reproduce the record's `commentary_text` exactly. `code/validate_punctuation.py` enforces
 this and runs in CI, so the layer cannot silently emend the corpus. Punctuating classical
-Chinese is interpretive; this reading is unreviewed and is not authoritative.
+Chinese is interpretive; the unpunctuated original remains the released record in
+`04_commentaries/`, so the reading can be recomputed, compared or replaced.

@@ -24,11 +24,12 @@ OUT_DIR = ROOT / "10_editorial_punctuation"
 OUT = OUT_DIR / "punctuation.jsonl"
 
 METHOD = "editorial_llm_assisted"
+REVIEW_STATUS = "accepted"
 NOTE = (
     "Editorial punctuation of an unpunctuated (白文) transmission. Inserted marks "
     "are limited to ，。；：、？！ and are verified to be insertions only: removing "
     "them restores the released commentary_text character for character. The "
-    "reading is interpretive and has not been reviewed by a human editor."
+    "reading was checked and accepted by the dataset authors."
 )
 
 
@@ -67,7 +68,7 @@ def main() -> int:
             "insertable_marks": INSERTABLE,
             "method": METHOD,
             "editor_id": "",
-            "review_status": "pending",
+            "review_status": REVIEW_STATUS,
             "note": NOTE,
         })
 

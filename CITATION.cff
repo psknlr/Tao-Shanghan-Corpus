@@ -20,7 +20,13 @@ type: dataset
 version: "1.0"
 date-released: "2026-08-11"
 license: CC-BY-4.0
-url: "https://psknlr.github.io/Tao-Shanghan-Corpus/"
+# Archived deposit of record. Cite this DOI rather than the repository URL.
+doi: "10.5281/zenodo.21889089"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21889089"
+    description: Zenodo deposit for this release
+url: "https://doi.org/10.5281/zenodo.21889089"
 repository-code: "https://github.com/psknlr/Tao-Shanghan-Corpus"
 keywords:
   - Shanghan Lun

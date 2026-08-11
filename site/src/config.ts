@@ -38,3 +38,8 @@ export const LAYER_URL = {
 }
 
 export const UPSTREAM_URL = 'https://jicheng.tw/tcm/index.html'
+
+/** Archived deposit of record. Cite this DOI rather than the repository URL. */
+export const DOI = '10.5281/zenodo.21889089'
+export const DOI_URL = `https://doi.org/${DOI}`
+export const ZENODO_REPOSITORY = 'Zenodo'

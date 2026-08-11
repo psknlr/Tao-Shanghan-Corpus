@@ -1,7 +1,11 @@
 # Historical Shanghan Corpus
 
-**A structured and provenance-aware corpus of the *Shanghan Lun* and its historical commentarial tradition**
+**A structured corpus of historical Shanghan literature with clauses, commentaries and textual variants**
 《傷寒論》歷代文獻結構化、可追溯數字語料庫
+
+> **The first publicly released dataset of the historical citation and commentarial system of the *Shanghan Lun*** — the first openly available corpus to align the canonical clauses with their historical commentarial tradition, competing manuscript witnesses and inter-textual relations as separate, individually addressable and provenance-tracked layers.
+>
+> **首個公開發布的《傷寒論》歷代引文體系數據集** —— 首次以獨立、可尋址、可溯源的分層結構，將經典條文與歷代注釋、傳本異文及文本間關係對齊發布。
 
 [**Explore the corpus →**](https://psknlr.github.io/Tao-Shanghan-Corpus/) · [Data dictionary](DATA_DICTIONARY.md) · [Licence](LICENSE.md) · [Version](VERSION.md) · [Validation reports](09_validation/)
 
@@ -14,9 +18,13 @@
 The *Shanghan Lun* (傷寒論) has been transmitted for eighteen centuries as a layered
 tradition: a canonical clause text, successive commentarial recensions, competing
 manuscript witnesses, and a dense web of cross-references that later commentators
-built between clauses. Most digital editions flatten that structure into plain text.
+built between clauses. Most digital editions flatten that structure into plain text,
+and the citation relationships that hold the tradition together — which commentator
+glossed which clause, in which recension, against which witness — have not previously
+been released in a machine-readable and independently checkable form.
 
-This corpus keeps the layers apart and links them explicitly. Canonical clauses,
+This is the first publicly available dataset to reconstruct that citation system as
+data. The corpus keeps the layers apart and links them explicitly: canonical clauses,
 historical commentaries, textual variants and inter-textual relations are separate,
 individually addressable record types, each carrying a resolvable path back to the
 source file it was derived from and the SHA-256 of that file.
@@ -226,14 +234,39 @@ python3 scripts/build_demo_data.py     # writes site/public/data/
 cd site && npm install && npm run dev
 ```
 
+## Authors
+
+Yanlan Kang, Li Xin, Peng Qiu, Xukun Zhang, William Cheng-Chung Chu
+
+**Affiliations**
+
+1. Institute of Medical Philosophy & Future AI
+2. Shandong Xiehe University
+3. The University of Hong Kong
+4. Shandong University of Traditional Chinese Medicine
+5. Fujian Fuyao University of Science and Technology
+
 ## Citation
 
-> ⟨dataset authors — to be completed⟩. *Historical Shanghan Corpus: a structured and
-> provenance-aware corpus of the Shanghan Lun and its historical commentarial tradition.*
-> Version 1.0, 2026. <https://github.com/psknlr/Tao-Shanghan-Corpus>
+> Kang, Y., Xin, L., Qiu, P., Zhang, X., & Chu, W. C.-C. (2026). *A structured corpus of
+> historical Shanghan literature with clauses, commentaries and textual variants*
+> (Version 1.0) [Data set]. <https://github.com/psknlr/Tao-Shanghan-Corpus>
 
-A machine-readable [`CITATION.cff`](CITATION.cff) is included. **The creator list in both
-files is a placeholder and must be completed before the dataset is cited or submitted.**
+```bibtex
+@dataset{kang_2026_historical_shanghan_corpus,
+  author    = {Kang, Yanlan and Xin, Li and Qiu, Peng and Zhang, Xukun and
+               Chu, William Cheng-Chung},
+  title     = {A structured corpus of historical Shanghan literature with
+               clauses, commentaries and textual variants},
+  version   = {1.0},
+  year      = {2026},
+  publisher = {GitHub},
+  url       = {https://github.com/psknlr/Tao-Shanghan-Corpus},
+  note      = {Historical Shanghan Corpus}
+}
+```
+
+A machine-readable [`CITATION.cff`](CITATION.cff) is included.
 
 ## Licence
 

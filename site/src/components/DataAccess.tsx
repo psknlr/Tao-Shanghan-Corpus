@@ -3,10 +3,22 @@ import type { CorpusSummary } from '../types'
 import { SectionHead } from './ui'
 import { DOWNLOAD_URL, LAYER_URL, REPO_URL, UPSTREAM_URL } from '../config'
 
-// The released materials name no individual authors — LICENSE.md and VERSION.md
-// refer only to "the dataset authors". The placeholder below is deliberate and
-// must be replaced with the real creator list before the dataset is cited.
-const CITATION_AUTHORS = '⟨dataset authors — to be completed⟩'
+const DATASET_TITLE =
+  'A structured corpus of historical Shanghan literature with clauses, commentaries and textual variants'
+
+const AUTHORS = ['Yanlan Kang', 'Li Xin', 'Peng Qiu', 'Xukun Zhang', 'William Cheng-Chung Chu']
+
+// Listed as a set: the author-to-affiliation mapping is not recorded in the
+// released materials, so none is asserted here.
+const AFFILIATIONS = [
+  'Institute of Medical Philosophy & Future AI',
+  'Shandong Xiehe University',
+  'The University of Hong Kong',
+  'Shandong University of Traditional Chinese Medicine',
+  'Fujian Fuyao University of Science and Technology',
+]
+
+const CITATION_AUTHORS = 'Kang, Y., Xin, L., Qiu, P., Zhang, X., & Chu, W. C.-C.'
 
 export function DataAccess({ summary }: { summary: CorpusSummary }) {
   const { t, n } = useI18n()
@@ -23,7 +35,7 @@ export function DataAccess({ summary }: { summary: CorpusSummary }) {
     { title: 'Documentation', body: t('ac.docs'), href: LAYER_URL.dictionary, note: `schema ${summary.schema_version}` },
   ]
 
-  const citation = `${CITATION_AUTHORS}. Historical Shanghan Corpus: a structured and provenance-aware corpus of the Shanghan Lun and its historical commentarial tradition. Version ${summary.version}, ${summary.validated_on.slice(0, 4)}. ${REPO_URL}`
+  const citation = `${CITATION_AUTHORS} (${summary.validated_on.slice(0, 4)}). ${DATASET_TITLE} (Version ${summary.version}) [Data set]. ${REPO_URL}`
 
   return (
     <section className="section" id="access">
@@ -62,11 +74,34 @@ export function DataAccess({ summary }: { summary: CorpusSummary }) {
 
         <div style={{ marginTop: '3rem' }}>
           <SectionHead no="11" title={t('ac.cite.title')} sub={t('ac.cite.sub')} />
+
+          <div className="credits">
+            <div>
+              <div className="eyebrow">{t('ac.authors')}</div>
+              <p className="credits__authors">{AUTHORS.join(' · ')}</p>
+            </div>
+            <div>
+              <div className="eyebrow">{t('ac.affiliations')}</div>
+              <ol className="credits__affiliations">
+                {AFFILIATIONS.map((name) => (
+                  <li key={name}>{name}</li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
           <p className="cite">{citation}</p>
           <p className="muted" style={{ fontSize: '0.78rem', marginTop: '0.85rem' }}>
-            {t('tl.field.sha')} · SHA256SUMS.txt ·{' '}
             <a href={LAYER_URL.citation} target="_blank" rel="noreferrer">
               CITATION.cff
+            </a>
+            {' · '}
+            <a href={`${REPO_URL}/blob/main/SHA256SUMS.txt`} target="_blank" rel="noreferrer">
+              SHA256SUMS.txt
+            </a>
+            {' · '}
+            <a href={LAYER_URL.version} target="_blank" rel="noreferrer">
+              VERSION.md
             </a>
           </p>
         </div>

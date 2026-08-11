@@ -22,6 +22,10 @@ const DICT = {
   'nav.theme': ['Toggle colour scheme', '切換配色'],
 
   // hero --------------------------------------------------------------------
+  'hero.first': [
+    'First publicly released dataset of the historical citation and commentarial system of the Shanghan Lun',
+    '首個公開發布的《傷寒論》歷代引文體系數據集',
+  ],
   'hero.zh': ['傷寒論歷代文獻結構化語料庫', '傷寒論歷代文獻結構化語料庫'],
   'hero.title': ['Historical Shanghan Corpus', 'Historical Shanghan Corpus'],
   'hero.lede': [
@@ -235,6 +239,8 @@ const DICT = {
   'ac.browse': ['Browse', '瀏覽'],
   'ac.cite.title': ['Citation', '引用'],
   'ac.cite.sub': ['Cite the dataset as follows. A machine-readable CITATION.cff is included in the repository.', '請按以下方式引用本數據集。倉庫內含機器可讀的 CITATION.cff。'],
+  'ac.authors': ['Authors', '作者'],
+  'ac.affiliations': ['Affiliations', '單位'],
   'ac.disclaimer.title': ['Disclaimer', '免責聲明'],
   'ac.disclaimer': [
     'This is a historical-literature dataset assembled for philological and digital-humanities research. It is not medical advice and must not be used as a source of clinical guidance.',

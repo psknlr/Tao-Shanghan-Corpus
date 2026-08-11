@@ -186,6 +186,10 @@ export function Hero({ summary }: { summary: CorpusSummary | null }) {
     <header className="hero" id="top">
       <div className="wrap hero__grid">
         <div>
+          <p className="hero__first">
+            <span aria-hidden>◆</span>
+            {t('hero.first')}
+          </p>
           <p className="hero__zh han">{t('hero.zh')}</p>
           <h1>{t('hero.title')}</h1>
           <p className="hero__lede">{t('hero.lede')}</p>

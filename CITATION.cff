@@ -1,15 +1,21 @@
 cff-version: 1.2.0
 message: "If you use this corpus, please cite it as below."
-title: "Historical Shanghan Corpus"
+title: >-
+  A structured corpus of historical Shanghan literature with clauses,
+  commentaries and textual variants
 abstract: >-
-  A structured and provenance-aware corpus of the Shanghan Lun and its historical
-  commentarial tradition. Release 1.0 covers 57 catalogued historical works
-  (425 source text files, 4,763,991 characters) and links 398 canonical clauses
-  and 283 auxiliary clauses to 2,958 aligned historical commentaries, 616
-  textual variants and 4,286 inter-textual relations. Every structured record
-  resolves to a catalogued work, a source text file and a verified SHA-256
-  checksum. Manual review of the structured records is in progress in this
-  version and no agreement statistics are reported.
+  The first publicly released dataset of the historical citation and
+  commentarial system of the Shanghan Lun, and the first openly available corpus
+  to align the canonical clauses with their historical commentarial tradition,
+  competing manuscript witnesses and inter-textual relations as separate,
+  individually addressable and provenance-tracked layers. Release 1.0 covers 57
+  catalogued historical works (425 source text files, 4,763,991 characters) and
+  links 398 canonical clauses and 283 auxiliary clauses to 2,958 aligned
+  historical commentaries, 616 textual variants and 4,286 inter-textual
+  relations. Every structured record resolves to a catalogued work, a source
+  text file and a verified SHA-256 checksum. Manual review of the structured
+  records is in progress in this version and no agreement statistics are
+  reported.
 type: dataset
 version: "1.0"
 date-released: "2026-08-11"
@@ -21,17 +27,29 @@ keywords:
   - 傷寒論
   - digital humanities
   - historical corpus
+  - citation system
   - textual criticism
   - textual variants
   - commentarial tradition
   - Literary Chinese
   - provenance
-# TODO: replace this placeholder with the real creator list (given-names,
-# family-names, ORCID, affiliation) before citing or submitting the dataset.
-# The released materials name no individual authors, referring only to
-# "the dataset authors", so no names are asserted here.
+# Author-to-affiliation mapping and ORCID identifiers are not yet recorded here.
+# The contributing institutions are, in no particular order: Institute of
+# Medical Philosophy & Future AI; Shandong Xiehe University; The University of
+# Hong Kong; Shandong University of Traditional Chinese Medicine; Fujian Fuyao
+# University of Science and Technology. Add an `affiliation:` and `orcid:` line
+# under each author once the mapping is confirmed.
 authors:
-  - name: "Dataset authors (placeholder — replace before citing)"
+  - given-names: Yanlan
+    family-names: Kang
+  - given-names: Li
+    family-names: Xin
+  - given-names: Peng
+    family-names: Qiu
+  - given-names: Xukun
+    family-names: Zhang
+  - given-names: William Cheng-Chung
+    family-names: Chu
 references:
   - type: database
     title: "中醫典籍資料庫 (Database of Chinese Medical Classics)"

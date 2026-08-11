@@ -134,7 +134,7 @@ export function ClauseExplorer({
   payload: ClausePayload | null
   error: string | null
 }) {
-  const { t, n } = useI18n()
+  const { t, n, clause } = useI18n()
   const [query, setQuery] = useState('')
   const deferred = useDeferredValue(query)
 
@@ -187,7 +187,7 @@ export function ClauseExplorer({
                   onClick={() => onSelect(entry.id)}
                 >
                   <div className="result__no">
-                    {entry.no !== null ? `條 ${entry.no}` : entry.id.replace('SHL_SONGBEN_', '')}
+                    {entry.no !== null ? clause(entry.no) : entry.id.replace('SHL_SONGBEN_', '')}
                   </div>
                   <div className="result__text">{entry.text}</div>
                   <div className="result__meta">

@@ -55,7 +55,7 @@ export function RelationGraph({
   onOpenClause: (clauseId: string) => void
   theme: 'light' | 'dark'
 }) {
-  const { t, v, n } = useI18n()
+  const { t, v, n, clause } = useI18n()
   const stageRef = useRef<HTMLDivElement>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
@@ -98,7 +98,7 @@ export function RelationGraph({
 
     const centre = payload.clause
     const centreLabel =
-      centre.canonical_clause_no !== null ? `條 ${centre.canonical_clause_no}` : centre.clause_id.slice(-8)
+      centre.canonical_clause_no !== null ? clause(centre.canonical_clause_no) : centre.clause_id.slice(-8)
 
     const cx = container.clientWidth / 2
     const cy = container.clientHeight / 2
@@ -119,7 +119,7 @@ export function RelationGraph({
       ...ordered.map((node, i) => ({
         data: {
           id: node.id,
-          label: node.type === 'clause' ? (node.no !== null && node.no !== undefined ? `條 ${node.no}` : node.id.slice(-6)) : node.label,
+          label: node.type === 'clause' ? (node.no !== null && node.no !== undefined ? clause(node.no) : node.id.slice(-6)) : node.label,
           kind: node.type,
         },
         position: positionFor(i, ordered.length, cx, cy),
@@ -213,7 +213,8 @@ export function RelationGraph({
       cancelled = true
       instance?.destroy()
     }
-  }, [payload, visible, theme])
+    // `clause` is part of the deps so node labels are redrawn on a language switch.
+  }, [payload, visible, theme, clause])
 
   const selectedNode: GraphNeighbour | null =
     payload.graph.neighbours.find((node) => node.id === selectedId) ?? null
@@ -288,7 +289,7 @@ export function RelationGraph({
                 </div>
                 <div className="node-detail__title">
                   {payload.clause.canonical_clause_no !== null
-                    ? `條 ${payload.clause.canonical_clause_no}`
+                    ? clause(payload.clause.canonical_clause_no)
                     : payload.clause.clause_id}
                 </div>
                 <p className="node-detail__body">{payload.clause.original_text}</p>
@@ -312,7 +313,7 @@ export function RelationGraph({
                 </div>
                 <div className="node-detail__title">
                   {selectedNode.type === 'clause' && selectedNode.no != null
-                    ? `條 ${selectedNode.no} · `
+                    ? `${clause(selectedNode.no)} · `
                     : ''}
                   {selectedNode.label}
                 </div>

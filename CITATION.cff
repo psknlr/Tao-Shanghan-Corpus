@@ -38,31 +38,33 @@ keywords:
 # authors. CFF 1.2.0 has no field for either designation, so it is recorded here
 # and rendered on the site and in the README.
 #
-# Author-to-affiliation mapping and ORCID identifiers are not yet recorded. The
-# contributing institutions are: Institute of Medical Philosophy & Future AI;
-# Longhua Hospital Affiliated to Shanghai University of Traditional Chinese
-# Medicine; Shandong Xiehe University; Guanghua Hospital of Integrated
-# Traditional Chinese and Western Medicine; The University of Hong Kong;
-# Shandong University of Traditional Chinese Medicine; Fujian Fuyao University
-# of Science and Technology. Add `affiliation:` and `orcid:` under each author
-# once the mapping is confirmed.
+# ORCID identifiers are not yet recorded; add `orcid:` under each author when
+# they are available.
 authors:
   - given-names: Yanlan
     family-names: Kang
+    affiliation: Institute of Medical Philosophy & Future AI
   - given-names: Yide
     family-names: Fang
+    affiliation: Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine
   - given-names: Li
     family-names: Xin
+    affiliation: Shandong Xiehe University
   - given-names: Yue
     family-names: Chen
+    affiliation: Guanghua Hospital of Integrated Traditional Chinese and Western Medicine
   - given-names: Qingshan
     family-names: Ma
+    affiliation: Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine
   - given-names: Peng
     family-names: Qiu
+    affiliation: The University of Hong Kong
   - given-names: Xukun
     family-names: Zhang
+    affiliation: Shandong University of Traditional Chinese Medicine
   - given-names: William Cheng-Chung
     family-names: Chu
+    affiliation: Fujian Fuyao University of Science and Technology
 references:
   - type: database
     title: "中醫典籍資料庫 (Database of Chinese Medical Classics)"

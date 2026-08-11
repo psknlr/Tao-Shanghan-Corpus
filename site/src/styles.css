@@ -741,6 +741,7 @@ button { font: inherit; color: inherit; }
 .credits__affiliations li::marker { color: var(--cinnabar); font-family: var(--mono); font-size: 0.75rem; }
 .credits__sep { color: var(--ink-3); }
 .credits__mark { color: var(--cinnabar); font-size: 0.7em; padding-left: 0.05em; }
+.credits__aff { color: var(--ink-3); font-family: var(--mono); font-size: 0.62em; padding-left: 0.1em; }
 .credits__legend { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 0.6rem; font-size: 0.75rem; color: var(--ink-2); }
 
 /* Download counter: the figure GitHub records for the release asset. */

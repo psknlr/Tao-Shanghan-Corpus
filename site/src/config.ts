@@ -1,0 +1,28 @@
+/** Repository coordinates used by outbound links. */
+export const REPO_OWNER = 'psknlr'
+export const REPO_NAME = 'Tao-Shanghan-Corpus'
+export const REPO_BRANCH = 'main'
+
+export const REPO_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}`
+export const TREE_URL = `${REPO_URL}/tree/${REPO_BRANCH}`
+export const DOWNLOAD_URL = `${REPO_URL}/archive/refs/heads/${REPO_BRANCH}.zip`
+
+/** Deep links into the released layers. */
+export const LAYER_URL = {
+  catalog: `${TREE_URL}/01_source_catalog`,
+  texts: `${TREE_URL}/02_source_texts`,
+  clauses: `${TREE_URL}/03_clauses`,
+  commentaries: `${TREE_URL}/04_commentaries`,
+  variants: `${TREE_URL}/05_textual_variants`,
+  relations: `${TREE_URL}/06_relations`,
+  unified: `${TREE_URL}/07_unified_records`,
+  review: `${TREE_URL}/08_manual_review`,
+  validation: `${TREE_URL}/09_validation`,
+  code: `${TREE_URL}/code`,
+  dictionary: `${REPO_URL}/blob/${REPO_BRANCH}/DATA_DICTIONARY.md`,
+  licence: `${REPO_URL}/blob/${REPO_BRANCH}/LICENSE.md`,
+  citation: `${REPO_URL}/blob/${REPO_BRANCH}/CITATION.cff`,
+  version: `${REPO_URL}/blob/${REPO_BRANCH}/VERSION.md`,
+}
+
+export const UPSTREAM_URL = 'https://jicheng.tw/tcm/index.html'

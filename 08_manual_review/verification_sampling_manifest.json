@@ -1,0 +1,33 @@
+{
+  "seed": 20260811,
+  "layers": {
+    "clauses": {
+      "population": 681,
+      "sampled": 440,
+      "fraction": 0.6461,
+      "stratified_by": "text_type",
+      "file": "verification_sample_clauses.csv"
+    },
+    "commentaries": {
+      "population": 2958,
+      "sampled": 442,
+      "fraction": 0.1494,
+      "stratified_by": "commentator",
+      "file": "verification_sample_commentaries.csv"
+    },
+    "variants": {
+      "population": 616,
+      "sampled": 200,
+      "fraction": 0.3247,
+      "stratified_by": "variant_book",
+      "file": "verification_sample_variants.csv"
+    },
+    "relations": {
+      "population": 4286,
+      "sampled": 503,
+      "fraction": 0.1174,
+      "stratified_by": "relation_type",
+      "file": "verification_sample_relations.csv"
+    }
+  }
+}

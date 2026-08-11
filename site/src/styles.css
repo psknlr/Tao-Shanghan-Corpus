@@ -739,6 +739,29 @@ button { font: inherit; color: inherit; }
   line-height: 1.75;
 }
 .credits__affiliations li::marker { color: var(--cinnabar); font-family: var(--mono); font-size: 0.75rem; }
+.credits__sep { color: var(--ink-3); }
+.credits__mark { color: var(--cinnabar); font-size: 0.7em; padding-left: 0.05em; }
+.credits__legend { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 0.6rem; font-size: 0.75rem; color: var(--ink-2); }
+
+/* Download counter: the figure GitHub records for the release asset. */
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  padding: 1.15rem 1.4rem;
+  border: 1px solid var(--rule-soft);
+  border-left: 2px solid var(--jade);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.downloads__figure { flex: none; }
+.downloads__n { font-family: var(--serif); font-size: clamp(1.8rem, 3.4vw, 2.4rem); line-height: 1; letter-spacing: -0.03em; color: var(--jade); }
+.downloads__label { margin-top: 0.35rem; font-size: 0.78rem; color: var(--ink-2); }
+.downloads__meta { flex: 1; min-width: 220px; font-size: 0.78rem; color: var(--ink-2); }
+.downloads__meta .mono { display: block; margin-top: 0.35rem; font-size: 0.68rem; color: var(--ink-3); word-break: break-word; }
+.downloads__meta a { color: inherit; }
 
 .cite {
   font-family: var(--mono);

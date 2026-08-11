@@ -1,6 +1,6 @@
 import { useI18n } from '../i18n'
-import { DOWNLOAD_URL, REPO_URL } from '../config'
-import type { CorpusSummary } from '../types'
+import { downloadHref, REPO_URL } from '../config'
+import type { CorpusSummary, DownloadMetrics } from '../types'
 
 /**
  * The hero diagram is a hand-laid schematic of the featured clause's ego
@@ -179,7 +179,13 @@ function HeroDiagram() {
   )
 }
 
-export function Hero({ summary }: { summary: CorpusSummary | null }) {
+export function Hero({
+  summary,
+  metrics,
+}: {
+  summary: CorpusSummary | null
+  metrics: DownloadMetrics | null
+}) {
   const { t } = useI18n()
 
   return (
@@ -202,7 +208,7 @@ export function Hero({ summary }: { summary: CorpusSummary | null }) {
             <a className="btn" href={REPO_URL} target="_blank" rel="noreferrer">
               {t('hero.cta.github')}
             </a>
-            <a className="btn btn--ghost" href={DOWNLOAD_URL}>
+            <a className="btn btn--ghost" href={downloadHref(metrics)}>
               {t('hero.cta.download')}
             </a>
           </div>

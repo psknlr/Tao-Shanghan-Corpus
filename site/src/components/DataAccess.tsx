@@ -1,27 +1,75 @@
 import { useI18n } from '../i18n'
-import type { CorpusSummary } from '../types'
+import type { CorpusSummary, DownloadMetrics } from '../types'
 import { SectionHead } from './ui'
-import { DOWNLOAD_URL, LAYER_URL, REPO_URL, UPSTREAM_URL } from '../config'
+import { downloadHref, LAYER_URL, RELEASES_URL, REPO_URL, UPSTREAM_URL } from '../config'
 
 const DATASET_TITLE =
   'A structured corpus of historical Shanghan literature with clauses, commentaries and textual variants'
 
-const AUTHORS = ['Yanlan Kang', 'Li Xin', 'Peng Qiu', 'Xukun Zhang', 'William Cheng-Chung Chu']
+// `equal` marks the joint first authors, `corresponding` the joint corresponding
+// authors. Both designations are stated by the authors; the author-to-affiliation
+// mapping is not, so none is asserted and the institutions are listed as a set.
+const AUTHORS: { name: string; equal?: boolean; corresponding?: boolean }[] = [
+  { name: 'Yanlan Kang', equal: true },
+  { name: 'Yide Fang', equal: true },
+  { name: 'Li Xin', equal: true },
+  { name: 'Yue Chen' },
+  { name: 'Qingshan Ma' },
+  { name: 'Peng Qiu', corresponding: true },
+  { name: 'Xukun Zhang', corresponding: true },
+  { name: 'William Cheng-Chung Chu', corresponding: true },
+]
 
-// Listed as a set: the author-to-affiliation mapping is not recorded in the
-// released materials, so none is asserted here.
 const AFFILIATIONS = [
   'Institute of Medical Philosophy & Future AI',
+  'Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine',
   'Shandong Xiehe University',
+  'Guanghua Hospital of Integrated Traditional Chinese and Western Medicine',
   'The University of Hong Kong',
   'Shandong University of Traditional Chinese Medicine',
   'Fujian Fuyao University of Science and Technology',
 ]
 
-const CITATION_AUTHORS = 'Kang, Y., Xin, L., Qiu, P., Zhang, X., & Chu, W. C.-C.'
+const CITATION_AUTHORS =
+  'Kang, Y., Fang, Y., Xin, L., Chen, Y., Ma, Q., Qiu, P., Zhang, X., & Chu, W. C.-C.'
 
-export function DataAccess({ summary }: { summary: CorpusSummary }) {
+function DownloadCounter({ metrics }: { metrics: DownloadMetrics }) {
   const { t, n } = useI18n()
+  const asset = metrics.latest_asset
+
+  return (
+    <div className="downloads">
+      <div className="downloads__figure">
+        <div className="downloads__n">{n(metrics.total_downloads)}</div>
+        <div className="downloads__label">{t('ac.downloads')}</div>
+      </div>
+      <div className="downloads__meta">
+        <p>{t('ac.downloads.note')}</p>
+        <p className="mono">
+          {asset?.tag && (
+            <>
+              {t('ac.downloads.release')} {asset.tag} ·{' '}
+            </>
+          )}
+          {asset?.name} · {t('ac.downloads.updated')} {metrics.generated_at.slice(0, 10)} ·{' '}
+          <a href={RELEASES_URL} target="_blank" rel="noreferrer">
+            releases ↗
+          </a>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+export function DataAccess({
+  summary,
+  metrics,
+}: {
+  summary: CorpusSummary
+  metrics: DownloadMetrics | null
+}) {
+  const { t, n } = useI18n()
+  const href = downloadHref(metrics)
 
   const cards = [
     {
@@ -57,8 +105,10 @@ export function DataAccess({ summary }: { summary: CorpusSummary }) {
           ))}
         </div>
 
+        {metrics?.available && <DownloadCounter metrics={metrics} />}
+
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginTop: '1.5rem' }}>
-          <a className="btn btn--primary" href={DOWNLOAD_URL}>
+          <a className="btn btn--primary" href={href}>
             {t('hero.cta.download')}
           </a>
           <a className="btn" href={LAYER_URL.dictionary} target="_blank" rel="noreferrer">
@@ -78,7 +128,24 @@ export function DataAccess({ summary }: { summary: CorpusSummary }) {
           <div className="credits">
             <div>
               <div className="eyebrow">{t('ac.authors')}</div>
-              <p className="credits__authors">{AUTHORS.join(' · ')}</p>
+              <p className="credits__authors">
+                {AUTHORS.map((author, i) => (
+                  <span key={author.name}>
+                    {i > 0 && <span className="credits__sep"> · </span>}
+                    {author.name}
+                    {author.equal && <sup className="credits__mark">†</sup>}
+                    {author.corresponding && <sup className="credits__mark">*</sup>}
+                  </span>
+                ))}
+              </p>
+              <p className="credits__legend">
+                <span>
+                  <sup className="credits__mark">†</sup> {t('ac.equal')}
+                </span>
+                <span>
+                  <sup className="credits__mark">*</sup> {t('ac.corresponding')}
+                </span>
+              </p>
             </div>
             <div>
               <div className="eyebrow">{t('ac.affiliations')}</div>

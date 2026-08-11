@@ -1,0 +1,62 @@
+name: Publish dataset release
+
+# Downloads are counted by GitHub only for release assets, so the distributable
+# archive has to live on a release rather than being linked from the repository
+# tree. This workflow publishes it once and then leaves it alone.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish (e.g. v1.0)'
+        required: true
+        default: 'v1.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish the release and attach the dataset archive
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+          ASSET: Historical_Shanghan_Corpus_v1.0.zip
+        run: |
+          set -euo pipefail
+
+          if [ ! -f "$ASSET" ]; then
+            echo "::error::$ASSET not found in the repository root"
+            exit 1
+          fi
+
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Creating release $TAG"
+            gh release create "$TAG" "$ASSET" \
+              --title "Historical Shanghan Corpus $TAG" \
+              --notes "Structured corpus of historical Shanghan literature with clauses, commentaries and textual variants.
+
+          57 historical works · 425 source text files · 4,763,991 characters
+          398 canonical clauses · 2,958 commentaries · 616 textual variants · 4,286 relations
+
+          Structured layers are released under CC BY 4.0. Explore the corpus at
+          https://psknlr.github.io/Tao-Shanghan-Corpus/"
+            exit 0
+          fi
+
+          # Re-uploading replaces the asset, and a replaced asset starts again
+          # from zero downloads. Only upload when it is genuinely absent, so
+          # re-running this workflow can never destroy the recorded count.
+          if gh release view "$TAG" --json assets \
+               --jq '.assets[].name' | grep -Fxq "$ASSET"; then
+            echo "$ASSET is already attached to $TAG; leaving the download count intact"
+          else
+            echo "Attaching $ASSET to the existing release $TAG"
+            gh release upload "$TAG" "$ASSET"
+          fi

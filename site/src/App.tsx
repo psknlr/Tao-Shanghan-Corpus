@@ -53,7 +53,7 @@ export default function App() {
   return (
     <>
       <Nav theme={theme} onTheme={toggleTheme} />
-      <Hero summary={corpus.data?.summary ?? null} />
+      <Hero summary={corpus.data?.summary ?? null} metrics={corpus.data?.metrics ?? null} />
 
       {corpus.error && (
         <div className="wrap" style={{ padding: '2rem 0' }}>
@@ -95,7 +95,7 @@ export default function App() {
           )}
 
           <DataQuality summary={corpus.data.summary} />
-          <DataAccess summary={corpus.data.summary} />
+          <DataAccess summary={corpus.data.summary} metrics={corpus.data.metrics} />
           <Footer summary={corpus.data.summary} />
         </>
       )}

@@ -1,0 +1,9 @@
+relation_type,edges,source_types,target_types,example_description
+commentary_support,2958,clause,commentary,成無己《註解傷寒論》對本條有注（對齊相似度1.00）。
+contraindication,1,clause,clause,本條為豬苓湯之禁例，與其主證條對勘。
+differential,117,clause,clause,二條共見汗出、發熱而結論方不同（桂枝湯 vs 桂枝麻黃各半湯），構成鑒別。
+mistreatment_transformation,52,clause,clause,誤治變證（下之後）以桂枝湯救治，與該方主證條互參。
+same_formula_family,151,clause,clause,兩條均涉及桂枝湯方證，但症狀條件不同。
+sequence,388,clause,clause,同篇相鄰條文（並列/遞進語境）
+transmission,3,clause,clause,本條言傳變：太陽病→陽明病。
+variant,616,clause,variant,傷寒雜病論_桂本存在對應異文（相似度1.00）。

@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "files": {
+    "03_clauses/clauses.jsonl": {
+      "records": 681,
+      "malformed_json": 0,
+      "id_field": "clause_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    },
+    "04_commentaries/commentaries.jsonl": {
+      "records": 2958,
+      "malformed_json": 0,
+      "id_field": "commentary_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    },
+    "05_textual_variants/variants.jsonl": {
+      "records": 616,
+      "malformed_json": 0,
+      "id_field": "variant_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    },
+    "06_relations/relations.jsonl": {
+      "records": 4286,
+      "malformed_json": 0,
+      "id_field": "relation_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    },
+    "06_relations/nodes.jsonl": {
+      "records": 4255,
+      "malformed_json": 0,
+      "id_field": "node_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    },
+    "07_unified_records/unified_text_records.jsonl": {
+      "records": 4255,
+      "malformed_json": 0,
+      "id_field": "record_id",
+      "duplicate_ids": 0,
+      "missing_required": {},
+      "wrong_type": {},
+      "status": "PASS"
+    }
+  },
+  "totals": {
+    "03_clauses/clauses.jsonl": 681,
+    "04_commentaries/commentaries.jsonl": 2958,
+    "05_textual_variants/variants.jsonl": 616,
+    "06_relations/relations.jsonl": 4286,
+    "06_relations/nodes.jsonl": 4255,
+    "07_unified_records/unified_text_records.jsonl": 4255
+  },
+  "status": "PASS"
+}

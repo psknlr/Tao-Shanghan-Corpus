@@ -1,0 +1,26 @@
+{
+  "name": "historical-shanghan-corpus-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive explorer for the Historical Shanghan Corpus",
+  "scripts": {
+    "data": "python3 ../scripts/build_demo_data.py --root .. --out public/data",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cytoscape": "^3.31.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.21.9",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}

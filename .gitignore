@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Node / site build
+node_modules/
+site/dist/
+site/.vite/
+
+# Generated demo payloads — rebuilt by scripts/build_demo_data.py during the
+# Pages deployment, so they are not tracked in the repository.
+site/public/data/
+
+# Editors and OS
+.DS_Store
+.vscode/
+.idea/

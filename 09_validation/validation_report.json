@@ -1,0 +1,79 @@
+{
+  "dataset": "Historical_Shanghan_Corpus",
+  "version": "1.0",
+  "schema_version": "1.0",
+  "validated_on": "2026-08-11",
+  "overall_status": "PASS",
+  "source_layer": {
+    "historical_works": 57,
+    "text_files": 425,
+    "characters_including_whitespace": 4763991,
+    "characters_excluding_whitespace": 4594154,
+    "bytes": 13818448,
+    "character_count_definition": "Python len() of the UTF-8-decoded file contents",
+    "sha256_match_within_release": "425/425",
+    "sha256_match_against_upstream_manifest": "425/425 (902/902 for the whole upstream bundle)",
+    "utf8_invalid": 0,
+    "empty_files": 0,
+    "exact_duplicate_source_files": 0
+  },
+  "structured_layers": {
+    "clauses.jsonl": 681,
+    "commentaries.jsonl": 2958,
+    "variants.jsonl": 616,
+    "relations.jsonl": 4286,
+    "nodes.jsonl": 4255,
+    "unified_text_records.jsonl": 4255
+  },
+  "schema_validation": {
+    "status": "PASS",
+    "malformed_json": 0,
+    "duplicate_identifiers": 0,
+    "missing_required_fields": 0,
+    "wrong_typed_fields": 0
+  },
+  "structural_consistency": {
+    "orphan_relation_endpoints": 0,
+    "unresolved_source_nodes": 0,
+    "unresolved_target_nodes": 0,
+    "self_loops": 0,
+    "nodes": 4255,
+    "nodes_referenced_by_edges": 3898,
+    "nodes_without_edges": 357,
+    "canonical_clauses_contiguous_1_398": true,
+    "canonical_clause_duplicates": 0,
+    "auxiliary_clauses": 283,
+    "commentary_clause_fk_resolved": "2958/2958",
+    "variant_clause_fk_resolved": "616/616"
+  },
+  "provenance_resolution": {
+    "clauses": {
+      "records": 681,
+      "resolved_to_source_files": 681,
+      "rate": 1.0
+    },
+    "commentaries": {
+      "records": 2958,
+      "resolved_to_source_files": 2958,
+      "rate": 1.0
+    },
+    "variants": {
+      "records": 616,
+      "resolved_to_source_files": 616,
+      "rate": 1.0
+    }
+  },
+  "duplicate_analysis": {
+    "groups_detected": 4,
+    "source_file_duplicates": 0,
+    "record_text_duplicate_groups": 4,
+    "interpretation": "two commentary pairs are the same short gloss transmitted from 註解傷寒論 into 張卿子傷寒論; two variant pairs are one 桂本 passage aligned to two different canonical clauses. All four are flagged for manual review, not treated as errors."
+  },
+  "manual_review": {
+    "status": "in_progress",
+    "records_requiring_review": 8541,
+    "records_reviewed": 0,
+    "agreement_statistics": "not yet available",
+    "note": "All structured records carry review_status='pending'. Independent-verification samples have been drawn with a fixed seed; no agreement statistics are reported in v1.0."
+  }
+}

@@ -1,0 +1,56 @@
+name: Validate dataset
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Schema validation
+        run: python3 code/validate_schema.py
+
+      - name: Relation and provenance validation
+        run: python3 code/validate_relations.py
+
+      - name: Source file checksums
+        run: python3 code/verify_checksums.py
+
+      - name: Build the site payloads
+        run: python3 scripts/build_demo_data.py
+
+      - name: Check the released counts still match the validation report
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+
+          report = json.loads(pathlib.Path('09_validation/validation_report.json').read_text(encoding='utf-8'))
+          summary = json.loads(pathlib.Path('site/public/data/corpus_summary.json').read_text(encoding='utf-8'))
+
+          expected = {
+              'clause_records': report['structured_layers']['clauses.jsonl'],
+              'commentaries': report['structured_layers']['commentaries.jsonl'],
+              'variants': report['structured_layers']['variants.jsonl'],
+              'relations': report['structured_layers']['relations.jsonl'],
+              'historical_works': report['source_layer']['historical_works'],
+              'source_files': report['source_layer']['text_files'],
+          }
+          failures = [
+              f"{key}: site says {summary['headline'][key]}, report says {value}"
+              for key, value in expected.items()
+              if summary['headline'][key] != value
+          ]
+          if failures:
+              print('\n'.join(failures), file=sys.stderr)
+              sys.exit(1)
+          print('site payload counts agree with the validation report')
+          PY

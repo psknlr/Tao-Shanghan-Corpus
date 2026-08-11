@@ -1,0 +1,53 @@
+{
+  "nodes": 4255,
+  "relations": 4286,
+  "unresolved_source_nodes": 0,
+  "unresolved_target_nodes": 0,
+  "orphan_endpoints": 0,
+  "nodes_referenced_by_edges": 3898,
+  "nodes_without_edges": 357,
+  "node_type_counts": {
+    "clause": 681,
+    "commentary": 2958,
+    "variant": 616
+  },
+  "target_type_counts": {
+    "clause": 712,
+    "variant": 616,
+    "commentary": 2958
+  },
+  "self_loops": 0,
+  "provenance_chain": {
+    "clauses": {
+      "records": 681,
+      "resolve_to_catalogued_work": 681,
+      "resolve_to_source_files": 681,
+      "resolution_rate": 1.0,
+      "unresolved": []
+    },
+    "commentaries": {
+      "records": 2958,
+      "resolve_to_catalogued_work": 2958,
+      "resolve_to_source_files": 2958,
+      "resolution_rate": 1.0,
+      "unresolved": [],
+      "clause_fk_resolve": 2958
+    },
+    "variants": {
+      "records": 616,
+      "resolve_to_catalogued_work": 616,
+      "resolve_to_source_files": 616,
+      "resolution_rate": 1.0,
+      "unresolved": [],
+      "clause_fk_resolve": 616
+    }
+  },
+  "canonical_clauses": {
+    "count": 398,
+    "contiguous_1_to_398": true,
+    "duplicates": 0,
+    "missing": []
+  },
+  "auxiliary_clauses": 283,
+  "status": "PASS"
+}

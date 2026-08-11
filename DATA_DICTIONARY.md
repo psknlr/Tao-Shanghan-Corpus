@@ -150,3 +150,33 @@ Missing values are written as the explicit token `not_stated_in_source`. Values 
 | `text_provenance` | string | Layer the text came from | provenance |
 | `candidate_confidence` | string|null | Pre-review label where applicable | provenance |
 | `metadata` | object | Layer-specific annotation payload | automated |
+
+## `10_editorial_punctuation/punctuation.jsonl`
+
+Editorial punctuation (句讀) for commentary passages whose transmission carries none.
+Added in v1.0 for 黃元御《傷寒懸解》(`SHSRC0013`), the one catalogued work transmitted as
+白文. The historical text in `04_commentaries/` is not modified by this layer; the reading
+is parallel to it and marks may only be inserted, never substituted or removed.
+
+| Field | Type | Description | Origin |
+|---|---|---|---|
+| `punctuation_id` | string | `PUNCT_` + the commentary identifier | computed |
+| `commentary_id` | string | Commentary record this reading punctuates | computed |
+| `source_id` | string | Owning work, copied from the commentary record | computed |
+| `book` | string | Work title, copied from the commentary record | provenance |
+| `commentator` | string | Commentator, copied from the commentary record | provenance |
+| `clause_id` | string | Clause the commentary is aligned to | computed |
+| `base_sha256` | string | SHA-256 of the `commentary_text` this reading was made from | computed |
+| `punctuated_text` | string | The commentary text with sentence punctuation inserted | automated |
+| `marks_added` | integer | Number of punctuation characters inserted | computed |
+| `insertable_marks` | string | The only characters this layer may introduce: `，。；：、？！` | curated |
+| `method` | string | `editorial_llm_assisted` | provenance |
+| `editor_id` | string | Reserved for a named editor; empty in v1.0 | review |
+| `review_status` | string | `accepted` — checked and accepted by the dataset authors | review |
+| `note` | string | Statement of what the reading is and is not | curated |
+
+**Invariant.** Removing every character of `insertable_marks` from `punctuated_text` must
+reproduce the record's `commentary_text` exactly. `code/validate_punctuation.py` enforces
+this and runs in CI, so the layer cannot silently emend the corpus. Punctuating classical
+Chinese is interpretive; the unpunctuated original remains the released record in
+`04_commentaries/`, so the reading can be recomputed, compared or replaced.

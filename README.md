@@ -7,6 +7,8 @@
 >
 > **首個公開發布的《傷寒論》歷代引文體系數據集** —— 首次以獨立、可尋址、可溯源的分層結構，將經典條文與歷代注釋、傳本異文及文本間關係對齊發布。
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21889089.svg)](https://doi.org/10.5281/zenodo.21889089)
+
 [**Explore the corpus →**](https://psknlr.github.io/Tao-Shanghan-Corpus/) · [Data dictionary](DATA_DICTIONARY.md) · [Licence](LICENSE.md) · [Version](VERSION.md) · [Validation reports](09_validation/)
 
 `v1.0` · schema `1.0` · built 2026-08-11 · Literary Chinese (`lzh`), Traditional script (`Hant`) · structured layers CC BY 4.0
@@ -214,6 +216,48 @@ python3 code/validate_relations.py
 python3 code/verify_checksums.py
 ```
 
+## Editorial punctuation (句讀)
+
+One catalogued work is transmitted **unpunctuated**. The upstream transcription of
+黃元御《傷寒懸解》(`SHSRC0013`) is 白文: all 48 of its commentary records carry zero
+sentence punctuation across 5,618 characters, against 0.157–0.218 marks per character in
+every other work. It is a property of that one transmission, not scattered noise.
+
+Punctuating classical Chinese is **interpretation, not transcription** — where a passage
+is broken changes what it says, and editors disagree. The editorial reading is therefore
+kept in its own layer and the historical text is never modified:
+
+```
+04_commentaries/commentaries.jsonl     commentary_text   ← unchanged, byte for byte
+10_editorial_punctuation/punctuation.jsonl
+                                       punctuated_text   ← parallel editorial reading
+```
+
+- **Insertions only.** The layer may introduce nothing but `，。；：、？！`.
+  [`code/validate_punctuation.py`](code/validate_punctuation.py) strips those marks back
+  out and requires the result to equal the released `commentary_text` character for
+  character; it also re-checks each record against a stored `base_sha256`. A reading that
+  altered, added or dropped one character of the source fails the build. This runs in CI
+  on every push.
+- **37 records, 900 marks.** The remaining 11 records of the work carry no running prose
+  — ten are bare section headings and one is a dose list delimited by full-width spaces —
+  so they are deliberately absent. A heading takes no punctuation.
+- **Attributed and reviewed.** Every record carries `method = editorial_llm_assisted` and
+  `review_status = accepted`: all 900 marks were checked and accepted by the dataset
+  authors. The unpunctuated original remains the released record in `04_commentaries/`,
+  so the reading can be recomputed, compared or replaced at any time.
+
+The explorer reads the accepted punctuation in place of the 白文 source, so every
+commentary is presented the same way.
+
+To rebuild the layer after editing the readings in
+[`scripts/punctuation_source.py`](scripts/punctuation_source.py):
+
+```bash
+python3 scripts/build_punctuation_layer.py   # refuses to write a non-insertion-only reading
+python3 code/validate_punctuation.py
+```
+
 ## Download counts
 
 Downloads are counted, and the running total is shown in the Data Access section of the
@@ -302,26 +346,28 @@ William Cheng-Chung Chu<sup>7\*</sup>
 
 ## Citation
 
-> Kang, Y., Fang, Y., Xin, L., Chen, Y., Ma, Q., Qiu, P., Zhang, X., & Chu, W. C.-C. (2026).
-> *A structured corpus of historical Shanghan literature with clauses, commentaries and
-> textual variants* (Version 1.0) [Data set]. <https://github.com/psknlr/Tao-Shanghan-Corpus>
+The dataset is archived on Zenodo. **Cite the DOI**, not the repository URL — it resolves
+to a fixed, versioned deposit.
+
+> Yanlan, K., Yide, F., Xin, L., Yue, C., Qingshan, M., Peng, Q., Xukun, Z. & Chu, C. C.
+> (2026). *Tao-Shanghan-Corpus: A Structured Corpus of Historical Shanghan Literature with
+> Clauses, Commentaries and Textual Variants* [Dataset]. Zenodo.
+> <https://doi.org/10.5281/zenodo.21889089>
 
 ```bibtex
-@dataset{kang_2026_historical_shanghan_corpus,
-  author    = {Kang, Yanlan and Fang, Yide and Xin, Li and Chen, Yue and
-               Ma, Qingshan and Qiu, Peng and Zhang, Xukun and
-               Chu, William Cheng-Chung},
-  title     = {A structured corpus of historical Shanghan literature with
-               clauses, commentaries and textual variants},
-  version   = {1.0},
+@dataset{kang_2026_tao_shanghan_corpus,
+  author    = {Yanlan, Kang and Yide, Fang and Xin, Li and Yue, Chen and
+               Qingshan, Ma and Peng, Qiu and Xukun, Zhang and Chu, Cheng-Chung},
+  title     = {Tao-Shanghan-Corpus: A Structured Corpus of Historical Shanghan
+               Literature with Clauses, Commentaries and Textual Variants},
   year      = {2026},
-  publisher = {GitHub},
-  url       = {https://github.com/psknlr/Tao-Shanghan-Corpus},
-  note      = {Historical Shanghan Corpus}
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.21889089},
+  url       = {https://doi.org/10.5281/zenodo.21889089}
 }
 ```
 
-A machine-readable [`CITATION.cff`](CITATION.cff) is included.
+A machine-readable [`CITATION.cff`](CITATION.cff) is included, carrying the same DOI.
 
 ## Licence
 

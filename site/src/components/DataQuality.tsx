@@ -38,9 +38,8 @@ function ReportTable({ caption, rows }: { caption: string; rows: Row[] }) {
 }
 
 export function DataQuality({ summary }: { summary: CorpusSummary }) {
-  const { t, n } = useI18n()
+  const { t } = useI18n()
   const validation = summary.validation
-  const review = validation.manual_review
 
   const schemaRows: Row[] = Object.entries(validation.schema).map(([key, value]) => ({ key, value }))
   const structuralRows: Row[] = Object.entries(validation.structural).map(([key, value]) => ({ key, value }))
@@ -49,10 +48,6 @@ export function DataQuality({ summary }: { summary: CorpusSummary }) {
     key: layer,
     value: `${stats.resolved_to_source_files}/${stats.records}  (${stats.rate.toFixed(2)})`,
   }))
-
-  const reviewed = review.records_reviewed
-  const required = review.records_requiring_review
-  const progress = required > 0 ? (reviewed / required) * 100 : 0
 
   return (
     <section className="section section--tint" id="quality">
@@ -100,52 +95,6 @@ export function DataQuality({ summary }: { summary: CorpusSummary }) {
           {String(validation.duplicates.interpretation ?? '')}
         </p>
 
-        <div className="review-panel">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center' }}>
-            <span className="badge-progress">
-              <span className="dot" aria-hidden />
-              {t('dq.review.status')}
-            </span>
-            <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.15rem' }}>{t('dq.review.title')}</h3>
-          </div>
-
-          <div className="review-bar">
-            <i style={{ width: `${Math.max(progress, 0.6)}%` }} />
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-              gap: '1rem',
-              marginTop: '1rem',
-              fontSize: '0.82rem',
-            }}
-          >
-            <div>
-              <div className="eyebrow">{t('dq.review.requiring')}</div>
-              <div className="mono" style={{ fontSize: '1.05rem' }}>
-                {n(required)}
-              </div>
-            </div>
-            <div>
-              <div className="eyebrow">{t('dq.review.done')}</div>
-              <div className="mono" style={{ fontSize: '1.05rem' }}>
-                {n(reviewed)}
-              </div>
-            </div>
-            <div>
-              <div className="eyebrow">{t('dq.review.agreement')}</div>
-              <div className="mono" style={{ fontSize: '0.86rem' }}>
-                {review.agreement_statistics}
-              </div>
-            </div>
-          </div>
-
-          <p className="muted" style={{ fontSize: '0.78rem', marginTop: '0.9rem', maxWidth: '78ch' }}>
-            {review.note}
-          </p>
-        </div>
       </div>
     </section>
   )

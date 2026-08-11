@@ -1,10 +1,7 @@
 import { useI18n } from '../i18n'
 import type { CorpusSummary, DownloadMetrics } from '../types'
 import { SectionHead } from './ui'
-import { downloadHref, LAYER_URL, RELEASES_URL, REPO_URL, UPSTREAM_URL } from '../config'
-
-const DATASET_TITLE =
-  'A structured corpus of historical Shanghan literature with clauses, commentaries and textual variants'
+import { DOI_URL, downloadHref, LAYER_URL, RELEASES_URL, REPO_URL, UPSTREAM_URL } from '../config'
 
 // `aff` indexes into AFFILIATIONS (1-based, as printed). `equal` marks the joint
 // first authors and `corresponding` the joint corresponding authors.
@@ -29,8 +26,12 @@ const AFFILIATIONS = [
   'Fujian Fuyao University of Science and Technology',
 ]
 
-const CITATION_AUTHORS =
-  'Kang, Y., Fang, Y., Xin, L., Chen, Y., Ma, Q., Qiu, P., Zhang, X., & Chu, W. C.-C.'
+// Reproduced verbatim from the Zenodo deposit so the printed citation matches
+// the record the DOI resolves to.
+const ZENODO_CITATION =
+  'Yanlan, K., Yide, F., Xin, L., Yue, C., Qingshan, M., Peng, Q., Xukun, Z. & Chu, C. C. (2026). ' +
+  'Tao-Shanghan-Corpus: A Structured Corpus of Historical Shanghan Literature with Clauses, ' +
+  'Commentaries and Textual Variants [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.21889089'
 
 function DownloadCounter({ metrics }: { metrics: DownloadMetrics }) {
   const { t, n } = useI18n()
@@ -82,7 +83,7 @@ export function DataAccess({
     { title: 'Documentation', body: t('ac.docs'), href: LAYER_URL.dictionary, note: `schema ${summary.schema_version}` },
   ]
 
-  const citation = `${CITATION_AUTHORS} (${summary.validated_on.slice(0, 4)}). ${DATASET_TITLE} (Version ${summary.version}) [Data set]. ${REPO_URL}`
+  const citation = ZENODO_CITATION
 
   return (
     <section className="section" id="access">
@@ -158,6 +159,14 @@ export function DataAccess({
           </div>
 
           <p className="cite">{citation}</p>
+
+          <div className="doi">
+            <span className="eyebrow">{t('ac.cite.doi')}</span>
+            <a className="doi__link mono" href={DOI_URL} target="_blank" rel="noreferrer">
+              {DOI_URL}
+            </a>
+          </div>
+
           <p className="muted" style={{ fontSize: '0.78rem', marginTop: '0.85rem' }}>
             <a href={LAYER_URL.citation} target="_blank" rel="noreferrer">
               CITATION.cff

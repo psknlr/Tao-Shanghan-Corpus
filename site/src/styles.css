@@ -565,6 +565,7 @@ button { font: inherit; color: inherit; }
 .comm-card__sim { font-family: var(--mono); font-size: 0.63rem; color: var(--ink-3); margin-top: 0.3rem; }
 
 .comm-read { margin-top: 1.5rem; padding: 1.5rem; }
+
 .comm-read__text { font-family: var(--han); font-size: 1.02rem; line-height: 2.1; margin-top: 1.1rem; text-align: justify; }
 .comm-read__seal {
   float: right;
@@ -763,6 +764,21 @@ button { font: inherit; color: inherit; }
 .downloads__meta { flex: 1; min-width: 220px; font-size: 0.78rem; color: var(--ink-2); }
 .downloads__meta .mono { display: block; margin-top: 0.35rem; font-size: 0.68rem; color: var(--ink-3); word-break: break-word; }
 .downloads__meta a { color: inherit; }
+
+.doi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(85, 122, 110, 0.3);
+  border-left: 2px solid var(--jade);
+  border-radius: var(--radius);
+  background: var(--jade-soft);
+}
+.doi__link { color: var(--jade); text-decoration: none; word-break: break-all; font-size: 0.8rem; }
+.doi__link:hover { text-decoration: underline; }
 
 .cite {
   font-family: var(--mono);

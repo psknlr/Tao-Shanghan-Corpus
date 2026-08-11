@@ -11,8 +11,8 @@ const AUTHORS: { name: string; aff: number; equal?: boolean; corresponding?: boo
   { name: 'Li Xin', aff: 3, equal: true },
   { name: 'Yue Chen', aff: 4 },
   { name: 'Qingshan Ma', aff: 2 },
-  { name: 'Peng Qiu', aff: 6, corresponding: true },
-  { name: 'Xukun Zhang', aff: 5, corresponding: true },
+  { name: 'Peng Qiu', aff: 5, corresponding: true },
+  { name: 'Xukun Zhang', aff: 6, corresponding: true },
   { name: 'William Cheng-Chung Chu', aff: 7, corresponding: true },
 ]
 

@@ -328,7 +328,7 @@ cd site && npm install && npm run dev
 ## Authors
 
 Yanlan Kang<sup>1†</sup>, Yide Fang<sup>2†</sup>, Li Xin<sup>3†</sup>, Yue Chen<sup>4</sup>,
-Qingshan Ma<sup>2</sup>, Peng Qiu<sup>6\*</sup>, Xukun Zhang<sup>5\*</sup>,
+Qingshan Ma<sup>2</sup>, Peng Qiu<sup>5\*</sup>, Xukun Zhang<sup>6\*</sup>,
 William Cheng-Chung Chu<sup>7\*</sup>
 
 <sup>†</sup> Joint first authors — contributed equally.

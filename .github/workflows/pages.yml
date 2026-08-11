@@ -1,19 +1,12 @@
 name: Deploy corpus explorer to GitHub Pages
 
+# Every push to main redeploys. An earlier version filtered by path, which meant
+# a commit touching only another workflow file left the published site stale
+# with no visible signal that nothing had run. The build takes about a minute,
+# so the filter cost more in confusion than it saved.
 on:
   push:
     branches: [main]
-    paths:
-      - 'site/**'
-      - 'scripts/build_demo_data.py'
-      - '01_source_catalog/**'
-      - '02_source_texts/file_manifest.csv'
-      - '03_clauses/**'
-      - '04_commentaries/**'
-      - '05_textual_variants/**'
-      - '06_relations/**'
-      - '09_validation/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -55,7 +48,12 @@ jobs:
         working-directory: site
         run: npm run build
 
+      # enablement creates the Pages site through the API when the repository
+      # does not have one yet, so a fresh clone or fork deploys without anyone
+      # having to set the publishing source in the repository settings first.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -69,4 +67,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

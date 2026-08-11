@@ -6,18 +6,17 @@ import { downloadHref, LAYER_URL, RELEASES_URL, REPO_URL, UPSTREAM_URL } from '.
 const DATASET_TITLE =
   'A structured corpus of historical Shanghan literature with clauses, commentaries and textual variants'
 
-// `equal` marks the joint first authors, `corresponding` the joint corresponding
-// authors. Both designations are stated by the authors; the author-to-affiliation
-// mapping is not, so none is asserted and the institutions are listed as a set.
-const AUTHORS: { name: string; equal?: boolean; corresponding?: boolean }[] = [
-  { name: 'Yanlan Kang', equal: true },
-  { name: 'Yide Fang', equal: true },
-  { name: 'Li Xin', equal: true },
-  { name: 'Yue Chen' },
-  { name: 'Qingshan Ma' },
-  { name: 'Peng Qiu', corresponding: true },
-  { name: 'Xukun Zhang', corresponding: true },
-  { name: 'William Cheng-Chung Chu', corresponding: true },
+// `aff` indexes into AFFILIATIONS (1-based, as printed). `equal` marks the joint
+// first authors and `corresponding` the joint corresponding authors.
+const AUTHORS: { name: string; aff: number; equal?: boolean; corresponding?: boolean }[] = [
+  { name: 'Yanlan Kang', aff: 1, equal: true },
+  { name: 'Yide Fang', aff: 2, equal: true },
+  { name: 'Li Xin', aff: 3, equal: true },
+  { name: 'Yue Chen', aff: 4 },
+  { name: 'Qingshan Ma', aff: 2 },
+  { name: 'Peng Qiu', aff: 6, corresponding: true },
+  { name: 'Xukun Zhang', aff: 5, corresponding: true },
+  { name: 'William Cheng-Chung Chu', aff: 7, corresponding: true },
 ]
 
 const AFFILIATIONS = [
@@ -25,8 +24,8 @@ const AFFILIATIONS = [
   'Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine',
   'Shandong Xiehe University',
   'Guanghua Hospital of Integrated Traditional Chinese and Western Medicine',
-  'The University of Hong Kong',
   'Shandong University of Traditional Chinese Medicine',
+  'The University of Hong Kong',
   'Fujian Fuyao University of Science and Technology',
 ]
 
@@ -133,6 +132,7 @@ export function DataAccess({
                   <span key={author.name}>
                     {i > 0 && <span className="credits__sep"> · </span>}
                     {author.name}
+                    <sup className="credits__aff">{author.aff}</sup>
                     {author.equal && <sup className="credits__mark">†</sup>}
                     {author.corresponding && <sup className="credits__mark">*</sup>}
                   </span>
@@ -177,15 +177,10 @@ export function DataAccess({
           <SectionHead no="12" title={t('ac.disclaimer.title')} />
           <p className="disclaimer">{t('ac.disclaimer')}</p>
           <p className="muted" style={{ fontSize: '0.78rem', marginTop: '1.25rem', maxWidth: '78ch' }}>
-            Structured layers are released under CC BY 4.0. The historical works themselves are
-            pre-modern and not under copyright; the digital transcriptions in{' '}
-            <span className="mono">02_source_texts/</span> were obtained from 中醫典籍資料庫 (
+            {t('ac.licence.note')}{' '}
             <a href={UPSTREAM_URL} target="_blank" rel="noreferrer">
-              jicheng.tw
+              jicheng.tw ↗
             </a>
-            ), whose terms of use are recorded as{' '}
-            <span className="mono">not_stated_in_source</span>. Anyone intending to redistribute the
-            transcriptions should consult the source repository directly.
           </p>
         </div>
       </div>
@@ -194,11 +189,14 @@ export function DataAccess({
 }
 
 export function Footer({ summary }: { summary: CorpusSummary | null }) {
+  const { t, lang } = useI18n()
   return (
     <footer className="foot">
       <div className="wrap foot__row">
         <span>
-          Historical Shanghan Corpus {summary ? `v${summary.version}` : ''} · 《傷寒論》歷代文獻結構化語料庫
+          Historical Shanghan Corpus {summary ? `v${summary.version}` : ''}
+          {lang !== 'en' && <> · {t('ui.tagline')}</>}
+          {lang === 'en' && <> · 《傷寒論》歷代文獻結構化語料庫</>}
         </span>
         <span>
           <a href={REPO_URL} target="_blank" rel="noreferrer">

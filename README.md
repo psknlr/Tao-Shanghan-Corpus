@@ -61,6 +61,11 @@ Canonical clause 23 (桂枝麻黃各半湯) is the default record: it carries 11
 across Jin, Ming and Qing, 2 variant witnesses and 9 differential relations, so a single
 record exercises the whole data model.
 
+The interface is available in **English, 简体中文 and 繁體中文**. Only the interface is
+localised: clause text, commentary, work titles and commentator names are shown in the
+original Traditional Chinese in all three modes and are never converted, since converting
+a historical text would change the object of study.
+
 The site loads a per-clause JSON file on demand rather than the whole corpus. Those files
 are derived by [`scripts/build_demo_data.py`](scripts/build_demo_data.py) and are a
 projection of the released layers — the layers themselves remain the citable artefact.
@@ -278,8 +283,9 @@ cd site && npm install && npm run dev
 
 ## Authors
 
-Yanlan Kang<sup>†</sup>, Yide Fang<sup>†</sup>, Li Xin<sup>†</sup>, Yue Chen, Qingshan Ma,
-Peng Qiu<sup>\*</sup>, Xukun Zhang<sup>\*</sup>, William Cheng-Chung Chu<sup>\*</sup>
+Yanlan Kang<sup>1†</sup>, Yide Fang<sup>2†</sup>, Li Xin<sup>3†</sup>, Yue Chen<sup>4</sup>,
+Qingshan Ma<sup>2</sup>, Peng Qiu<sup>6\*</sup>, Xukun Zhang<sup>5\*</sup>,
+William Cheng-Chung Chu<sup>7\*</sup>
 
 <sup>†</sup> Joint first authors — contributed equally.
 <sup>\*</sup> Joint corresponding authors.
@@ -290,8 +296,8 @@ Peng Qiu<sup>\*</sup>, Xukun Zhang<sup>\*</sup>, William Cheng-Chung Chu<sup>\*<
 2. Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine
 3. Shandong Xiehe University
 4. Guanghua Hospital of Integrated Traditional Chinese and Western Medicine
-5. The University of Hong Kong
-6. Shandong University of Traditional Chinese Medicine
+5. Shandong University of Traditional Chinese Medicine
+6. The University of Hong Kong
 7. Fujian Fuyao University of Science and Technology
 
 ## Citation

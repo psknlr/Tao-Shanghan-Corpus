@@ -3,14 +3,17 @@ import { compact, useI18n } from '../i18n'
 import type { SourceWork, TimelineBand, TimelineWork } from '../types'
 import { KeyValues, SectionHead } from './ui'
 
-const DYNASTY_ZH: Record<string, string> = {
-  'Eastern Han': '東漢',
-  Song: '宋',
-  'Jin (1115-1234)': '金',
-  Yuan: '元',
-  Ming: '明',
-  Qing: '清',
-  not_stated_in_source: '未載',
+// The band already prints the dynasty through the shared vocabulary, so this is
+// the pairing in the other script: Han characters alongside English, and the
+// English name alongside Chinese.
+const DYNASTY_ALT: Record<string, [en: string, zhHant: string]> = {
+  'Eastern Han': ['Eastern Han', '東漢'],
+  Song: ['Song', '宋'],
+  'Jin (1115-1234)': ['Jin', '金'],
+  Yuan: ['Yuan', '元'],
+  Ming: ['Ming', '明'],
+  Qing: ['Qing', '清'],
+  not_stated_in_source: ['not stated', '未載'],
 }
 
 function WorkDetail({ work, entry }: { work: SourceWork; entry: TimelineWork }) {
@@ -79,7 +82,9 @@ export function Timeline({ bands, sources }: { bands: TimelineBand[]; sources: S
             <div className="tl__band" key={band.dynasty}>
               <div className="tl__label">
                 <div className="tl__dynasty">{v(band.dynasty)}</div>
-                <div className="tl__dynasty-zh han">{DYNASTY_ZH[band.dynasty] ?? '—'}</div>
+                <div className="tl__dynasty-zh han">
+                  {(DYNASTY_ALT[band.dynasty] ?? ['—', '—'])[lang === 'en' ? 1 : 0]}
+                </div>
                 <div className="tl__count">
                   {n(band.works_count)} {t('tl.works')} · {compact(band.characters)} {t('tl.chars')}
                 </div>
@@ -97,7 +102,8 @@ export function Timeline({ bands, sources }: { bands: TimelineBand[]; sources: S
                   >
                     <div className="tl__work-title">{entryWork.title_zh}</div>
                     <div className="tl__work-meta">
-                      {lang === 'zh' ? entryWork.author : entryWork.title_translit} · {compact(entryWork.characters)}
+                      {lang === 'en' ? entryWork.title_translit : entryWork.author} ·{' '}
+                      {compact(entryWork.characters)}
                     </div>
                   </button>
                 ))}

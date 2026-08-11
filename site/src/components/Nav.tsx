@@ -1,4 +1,4 @@
-import { useI18n, type Lang } from '../i18n'
+import { LANGS, useI18n } from '../i18n'
 import { REPO_URL } from '../config'
 
 const LINKS: { href: string; key: Parameters<ReturnType<typeof useI18n>['t']>[0] }[] = [
@@ -37,16 +37,17 @@ export function Nav({ theme, onTheme }: { theme: 'light' | 'dark'; onTheme: () =
         </div>
 
         <div className="nav__tools">
-          <div className="lang-toggle" role="group" aria-label="Interface language">
-            {(['en', 'zh'] as Lang[]).map((code) => (
+          <div className="lang-toggle" role="group" aria-label={t('nav.language')}>
+            {LANGS.map((option) => (
               <button
-                key={code}
+                key={option.code}
                 type="button"
-                data-on={lang === code}
-                aria-pressed={lang === code}
-                onClick={() => setLang(code)}
+                lang={option.htmlLang}
+                data-on={lang === option.code}
+                aria-pressed={lang === option.code}
+                onClick={() => setLang(option.code)}
               >
-                {code === 'en' ? 'EN' : '中文'}
+                {option.short}
               </button>
             ))}
           </div>

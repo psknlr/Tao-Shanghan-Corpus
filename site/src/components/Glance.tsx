@@ -8,7 +8,7 @@ const BOX_W = 128
 const BOX_H = 46
 const COLS = [8, 166, 324, 482, 640, 798]
 
-type Stage = { label: string; zh: string; value: string; tone?: 'cinnabar' | 'jade' | 'gold' }
+type Stage = { label: string; value: string; tone?: 'cinnabar' | 'jade' | 'gold' }
 
 function Box({ x, y, stage, zh }: { x: number; y: number; stage: Stage; zh: boolean }) {
   const stroke =
@@ -24,7 +24,7 @@ function Box({ x, y, stage, zh }: { x: number; y: number; stage: Stage; zh: bool
         fill="var(--ink)"
         fontFamily={zh ? 'var(--han)' : 'var(--sans)'}
       >
-        {zh ? stage.zh : stage.label}
+        {stage.label}
       </text>
       <text
         x={x + BOX_W / 2}
@@ -47,21 +47,21 @@ function Arrow({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: num
 }
 
 function Pipeline({ summary }: { summary: CorpusSummary }) {
-  const { t, lang } = useI18n()
-  const zh = lang === 'zh'
+  const { t, isZh } = useI18n()
+  const zh = isZh
   const h = summary.headline
   const midY = 100
   const fanY = [28, 100, 172]
 
   const trunk: Stage[] = [
-    { label: t('glance.works'), zh: '歷史文獻', value: String(h.historical_works) },
-    { label: t('glance.files'), zh: '源文本', value: String(h.source_files) },
-    { label: t('glance.clauses'), zh: '條文記錄', value: String(h.clause_records) },
+    { label: t('glance.works'), value: String(h.historical_works) },
+    { label: t('glance.files'), value: String(h.source_files) },
+    { label: t('glance.clauses'), value: String(h.clause_records) },
   ]
   const fan: Stage[] = [
-    { label: t('glance.commentaries'), zh: '注釋', value: h.commentaries.toLocaleString('en-US'), tone: 'jade' },
-    { label: t('glance.variants'), zh: '異文', value: h.variants.toLocaleString('en-US'), tone: 'gold' },
-    { label: t('glance.relations'), zh: '關係', value: h.relations.toLocaleString('en-US'), tone: 'cinnabar' },
+    { label: t('glance.commentaries'), value: h.commentaries.toLocaleString('en-US'), tone: 'jade' },
+    { label: t('glance.variants'), value: h.variants.toLocaleString('en-US'), tone: 'gold' },
+    { label: t('glance.relations'), value: h.relations.toLocaleString('en-US'), tone: 'cinnabar' },
   ]
 
   return (
@@ -95,18 +95,13 @@ function Pipeline({ summary }: { summary: CorpusSummary }) {
         x={COLS[4]}
         y={midY}
         zh={zh}
-        stage={{ label: 'Unified records', zh: '統一記錄', value: h.unified_records.toLocaleString('en-US') }}
+        stage={{ label: t('glance.unified'), value: h.unified_records.toLocaleString('en-US') }}
       />
       <Box
         x={COLS[5]}
         y={midY}
         zh={zh}
-        stage={{
-          label: 'Validation & review',
-          zh: '驗證與審核',
-          value: summary.validation.overall_status,
-          tone: 'jade',
-        }}
+        stage={{ label: t('glance.validation'), value: summary.validation.overall_status, tone: 'jade' }}
       />
     </svg>
   )
@@ -115,18 +110,22 @@ function Pipeline({ summary }: { summary: CorpusSummary }) {
 /* ----------------------------------------------------------------- section --- */
 
 export function Glance({ summary }: { summary: CorpusSummary }) {
-  const { t, v, n } = useI18n()
+  const { t, v, n, lang } = useI18n()
   const h = summary.headline
 
+  // Each card carries a second label in the other script, so the pairing stays
+  // bilingual whichever interface language is selected.
+  const alt = (en: string, zhHant: string) => (lang === 'en' ? zhHant : en)
+
   const cards = [
-    { value: n(h.historical_works), label: t('glance.works'), zh: '歷史文獻' },
-    { value: n(h.source_files), label: t('glance.files'), zh: '源文本文件' },
-    { value: compact(h.characters), label: t('glance.characters'), zh: '字符總量' },
-    { value: n(h.clause_records), label: t('glance.clauses'), zh: '條文記錄' },
-    { value: n(h.canonical_clauses), label: t('glance.canonical'), zh: '經典條文' },
-    { value: n(h.commentaries), label: t('glance.commentaries'), zh: '歷代注釋' },
-    { value: n(h.variants), label: t('glance.variants'), zh: '異文' },
-    { value: n(h.relations), label: t('glance.relations'), zh: '語義關係' },
+    { value: n(h.historical_works), label: t('glance.works'), alt: alt('Historical works', '歷史文獻') },
+    { value: n(h.source_files), label: t('glance.files'), alt: alt('Source text files', '源文本文件') },
+    { value: compact(h.characters), label: t('glance.characters'), alt: alt('Characters', '字符總量') },
+    { value: n(h.clause_records), label: t('glance.clauses'), alt: alt('Clause records', '條文記錄') },
+    { value: n(h.canonical_clauses), label: t('glance.canonical'), alt: alt('Canonical clauses', '經典條文') },
+    { value: n(h.commentaries), label: t('glance.commentaries'), alt: alt('Commentaries', '歷代注釋') },
+    { value: n(h.variants), label: t('glance.variants'), alt: alt('Textual variants', '異文') },
+    { value: n(h.relations), label: t('glance.relations'), alt: alt('Relations', '語義關係') },
   ]
 
   return (
@@ -139,7 +138,7 @@ export function Glance({ summary }: { summary: CorpusSummary }) {
             <div className="stat" key={card.label}>
               <div className="stat__value">{card.value}</div>
               <div className="stat__label">{card.label}</div>
-              <div className="stat__zh">{card.zh}</div>
+              <div className="stat__zh">{card.alt}</div>
             </div>
           ))}
         </div>

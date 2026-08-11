@@ -7,6 +7,10 @@ name: Deploy corpus explorer to GitHub Pages
 on:
   push:
     branches: [main]
+  # Download counts change without anyone pushing, so the site is rebuilt daily
+  # to pick them up.
+  schedule:
+    - cron: '17 3 * * *'
   workflow_dispatch:
 
 permissions:
@@ -39,6 +43,14 @@ jobs:
       # the deployed page can never drift from the data in the repository.
       - name: Derive the site payloads
         run: python3 scripts/build_demo_data.py
+
+      # Best-effort: writes metrics.json with available=false if the API cannot
+      # be reached, and the site then hides the counter rather than showing a
+      # figure it cannot stand behind. Never fails the build.
+      - name: Collect download counts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/fetch_download_metrics.py
 
       - name: Install dependencies
         working-directory: site

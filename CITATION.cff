@@ -33,17 +33,30 @@ keywords:
   - commentarial tradition
   - Literary Chinese
   - provenance
-# Author-to-affiliation mapping and ORCID identifiers are not yet recorded here.
-# The contributing institutions are, in no particular order: Institute of
-# Medical Philosophy & Future AI; Shandong Xiehe University; The University of
-# Hong Kong; Shandong University of Traditional Chinese Medicine; Fujian Fuyao
-# University of Science and Technology. Add an `affiliation:` and `orcid:` line
-# under each author once the mapping is confirmed.
+# Yanlan Kang, Yide Fang and Li Xin contributed equally as joint first authors.
+# Peng Qiu, Xukun Zhang and William Cheng-Chung Chu are the joint corresponding
+# authors. CFF 1.2.0 has no field for either designation, so it is recorded here
+# and rendered on the site and in the README.
+#
+# Author-to-affiliation mapping and ORCID identifiers are not yet recorded. The
+# contributing institutions are: Institute of Medical Philosophy & Future AI;
+# Longhua Hospital Affiliated to Shanghai University of Traditional Chinese
+# Medicine; Shandong Xiehe University; Guanghua Hospital of Integrated
+# Traditional Chinese and Western Medicine; The University of Hong Kong;
+# Shandong University of Traditional Chinese Medicine; Fujian Fuyao University
+# of Science and Technology. Add `affiliation:` and `orcid:` under each author
+# once the mapping is confirmed.
 authors:
   - given-names: Yanlan
     family-names: Kang
+  - given-names: Yide
+    family-names: Fang
   - given-names: Li
     family-names: Xin
+  - given-names: Yue
+    family-names: Chen
+  - given-names: Qingshan
+    family-names: Ma
   - given-names: Peng
     family-names: Qiu
   - given-names: Xukun

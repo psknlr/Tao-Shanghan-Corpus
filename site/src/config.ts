@@ -5,7 +5,19 @@ export const REPO_BRANCH = 'main'
 
 export const REPO_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}`
 export const TREE_URL = `${REPO_URL}/tree/${REPO_BRANCH}`
-export const DOWNLOAD_URL = `${REPO_URL}/archive/refs/heads/${REPO_BRANCH}.zip`
+export const RELEASES_URL = `${REPO_URL}/releases`
+
+/** Repository archive. GitHub does not count these, so it is only the fallback. */
+export const ARCHIVE_URL = `${REPO_URL}/archive/refs/heads/${REPO_BRANCH}.zip`
+
+/**
+ * Downloads are only counted by GitHub when they go through a release asset, so
+ * every download control on the site resolves its href through here: the real
+ * asset when a release exists, the uncounted archive otherwise.
+ */
+export function downloadHref(metrics: { available: boolean; latest_asset: { url: string } | null } | null): string {
+  return metrics?.available && metrics.latest_asset?.url ? metrics.latest_asset.url : ARCHIVE_URL
+}
 
 /** Deep links into the released layers. */
 export const LAYER_URL = {

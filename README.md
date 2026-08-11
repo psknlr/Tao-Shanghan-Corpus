@@ -209,6 +209,48 @@ python3 code/validate_relations.py
 python3 code/verify_checksums.py
 ```
 
+## Download counts
+
+Downloads are counted, and the running total is shown in the Data Access section of the
+[explorer](https://psknlr.github.io/Tao-Shanghan-Corpus/).
+
+GitHub Pages is a static host, so there is no server that could increment a counter. The
+only figure that is both real and independently verifiable is the one GitHub itself keeps:
+the `download_count` it records for every **release asset**. The mechanism follows from
+that:
+
+```
+release asset  ──►  GitHub records download_count
+      ▲                        │
+      │                        ▼
+every download   scripts/fetch_download_metrics.py  (reads the API)
+control on the                 │
+site links here                ▼
+              site/public/data/metrics.json  ──►  rendered in the explorer
+```
+
+- **`.github/workflows/release.yml`** publishes the tagged release and attaches
+  `Historical_Shanghan_Corpus_v1.0.zip`. It re-uploads the asset only when it is missing:
+  replacing an asset resets its count to zero, so re-running the workflow can never
+  destroy the recorded figure.
+- **`scripts/fetch_download_metrics.py`** reads the per-asset counts from the releases
+  API, plus 14-day clone and view counts where the token allows it.
+- **`.github/workflows/pages.yml`** runs it before each build and on a daily schedule, so
+  the published figure keeps up without anyone pushing.
+- Every download control on the site resolves its link through `downloadHref()`, so all
+  download paths go through the counted release asset.
+
+The counter degrades rather than misleads. Until a release is published — or if the API
+cannot be read — `metrics.json` carries `available: false`, the site hides the figure
+instead of showing zero, and download links fall back to the repository archive.
+
+To publish the release: **Actions → Publish dataset release → Run workflow**, or push a
+`v*` tag.
+
+Repository traffic (clones and views) is a 14-day rolling window that GitHub does not
+retain beyond that, and it is reported separately from download counts rather than mixed
+into them.
+
 ## Quick start
 
 Read a layer with nothing but the standard library:
@@ -236,25 +278,32 @@ cd site && npm install && npm run dev
 
 ## Authors
 
-Yanlan Kang, Li Xin, Peng Qiu, Xukun Zhang, William Cheng-Chung Chu
+Yanlan Kang<sup>†</sup>, Yide Fang<sup>†</sup>, Li Xin<sup>†</sup>, Yue Chen, Qingshan Ma,
+Peng Qiu<sup>\*</sup>, Xukun Zhang<sup>\*</sup>, William Cheng-Chung Chu<sup>\*</sup>
+
+<sup>†</sup> Joint first authors — contributed equally.
+<sup>\*</sup> Joint corresponding authors.
 
 **Affiliations**
 
 1. Institute of Medical Philosophy & Future AI
-2. Shandong Xiehe University
-3. The University of Hong Kong
-4. Shandong University of Traditional Chinese Medicine
-5. Fujian Fuyao University of Science and Technology
+2. Longhua Hospital Affiliated to Shanghai University of Traditional Chinese Medicine
+3. Shandong Xiehe University
+4. Guanghua Hospital of Integrated Traditional Chinese and Western Medicine
+5. The University of Hong Kong
+6. Shandong University of Traditional Chinese Medicine
+7. Fujian Fuyao University of Science and Technology
 
 ## Citation
 
-> Kang, Y., Xin, L., Qiu, P., Zhang, X., & Chu, W. C.-C. (2026). *A structured corpus of
-> historical Shanghan literature with clauses, commentaries and textual variants*
-> (Version 1.0) [Data set]. <https://github.com/psknlr/Tao-Shanghan-Corpus>
+> Kang, Y., Fang, Y., Xin, L., Chen, Y., Ma, Q., Qiu, P., Zhang, X., & Chu, W. C.-C. (2026).
+> *A structured corpus of historical Shanghan literature with clauses, commentaries and
+> textual variants* (Version 1.0) [Data set]. <https://github.com/psknlr/Tao-Shanghan-Corpus>
 
 ```bibtex
 @dataset{kang_2026_historical_shanghan_corpus,
-  author    = {Kang, Yanlan and Xin, Li and Qiu, Peng and Zhang, Xukun and
+  author    = {Kang, Yanlan and Fang, Yide and Xin, Li and Chen, Yue and
+               Ma, Qingshan and Qiu, Peng and Zhang, Xukun and
                Chu, William Cheng-Chung},
   title     = {A structured corpus of historical Shanghan literature with
                clauses, commentaries and textual variants},

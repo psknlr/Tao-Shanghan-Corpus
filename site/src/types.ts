@@ -273,6 +273,41 @@ export interface ClausePayload {
   counts: { commentaries: number; variants: number; relations: number }
 }
 
+export interface ReleaseAsset {
+  name: string
+  download_count: number
+  size: number
+  url: string
+  updated_at: string
+  tag?: string
+}
+
+export interface DownloadMetrics {
+  generated_at: string
+  repository: string
+  /** False when no release has been published, or the API could not be read. */
+  available: boolean
+  source: string
+  total_downloads: number
+  releases: {
+    tag: string
+    name: string
+    published_at: string
+    html_url: string
+    prerelease: boolean
+    assets: ReleaseAsset[]
+  }[]
+  latest_asset: ReleaseAsset | null
+  traffic: {
+    available: boolean
+    window_days?: number
+    clones?: number
+    unique_clones?: number
+    views?: number
+    unique_views?: number
+  }
+}
+
 export interface RelationType {
   relation_type: string
   edges: number

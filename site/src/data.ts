@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type {
   ClausePayload,
   CorpusSummary,
+  DownloadMetrics,
   RelationType,
   SearchEntry,
   SourceWork,
@@ -39,6 +40,8 @@ export interface CorpusBundle {
   index: SearchEntry[]
   relationTypes: RelationType[]
   sources: SourceWork[]
+  /** Null when metrics.json is absent — a local dev build, for instance. */
+  metrics: DownloadMetrics | null
 }
 
 type Resource<T> = { data: T | null; error: string | null }
@@ -54,9 +57,12 @@ export function useCorpus(): Resource<CorpusBundle> {
       loadJSON<SearchEntry[]>('search_index.json'),
       loadJSON<RelationType[]>('relation_types.json'),
       loadJSON<SourceWork[]>('sources.json'),
+      // Download counts are an optional extra: a missing or unreadable
+      // metrics.json must never stop the corpus itself from loading.
+      loadJSON<DownloadMetrics>('metrics.json').catch(() => null),
     ])
-      .then(([summary, timeline, index, relationTypes, sources]) => {
-        if (live) setState({ data: { summary, timeline, index, relationTypes, sources }, error: null })
+      .then(([summary, timeline, index, relationTypes, sources, metrics]) => {
+        if (live) setState({ data: { summary, timeline, index, relationTypes, sources, metrics }, error: null })
       })
       .catch((err: Error) => {
         if (live) setState({ data: null, error: err.message })

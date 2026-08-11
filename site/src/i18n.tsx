@@ -241,6 +241,15 @@ const DICT = {
   'ac.cite.sub': ['Cite the dataset as follows. A machine-readable CITATION.cff is included in the repository.', '請按以下方式引用本數據集。倉庫內含機器可讀的 CITATION.cff。'],
   'ac.authors': ['Authors', '作者'],
   'ac.affiliations': ['Affiliations', '單位'],
+  'ac.equal': ['contributed equally', '共同第一作者'],
+  'ac.corresponding': ['corresponding authors', '共同通訊作者'],
+  'ac.downloads': ['Dataset downloads', '數據集下載量'],
+  'ac.downloads.note': [
+    'Counted by GitHub on the release asset. Updated when the site is rebuilt.',
+    '由 GitHub 對 release 資產原生統計，站點重建時更新。',
+  ],
+  'ac.downloads.release': ['release', '版本'],
+  'ac.downloads.updated': ['updated', '更新於'],
   'ac.disclaimer.title': ['Disclaimer', '免責聲明'],
   'ac.disclaimer': [
     'This is a historical-literature dataset assembled for philological and digital-humanities research. It is not medical advice and must not be used as a source of clinical guidance.',

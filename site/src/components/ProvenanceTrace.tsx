@@ -40,8 +40,7 @@ export function ProvenanceTrace({ payload }: { payload: ClausePayload }) {
           <Step label={t('pv.step.record')}>
             <div className="trace__value mono">{chain.record.id}</div>
             <div className="trace__note">
-              {v(clause.text_type)} · {t('pv.resolution')}: {v(chain.record.source_resolution)} ·{' '}
-              {t('cl.notice.label')}: <span className="pending">{v(chain.record.review_status)}</span>
+              {v(clause.text_type)} · {t('pv.resolution')}: {v(chain.record.source_resolution)}
             </div>
           </Step>
 

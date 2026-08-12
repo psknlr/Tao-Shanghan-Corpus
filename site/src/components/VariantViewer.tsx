@@ -36,7 +36,6 @@ function VariantMeta({ variant }: { variant: VariantRecord }) {
         { label: t('vr.similarity'), value: variant.similarity.toFixed(3), mono: true },
         { label: t('cm.field.confidence'), value: v(variant.candidate_confidence) },
         { label: t('pv.resolution'), value: v(variant.source_resolution) },
-        { label: t('cl.notice.label'), value: v(variant.review_status) },
         { label: t('tl.field.sourceid'), value: variant.source_id, mono: true },
       ]}
     />

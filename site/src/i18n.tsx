@@ -133,12 +133,6 @@ const DICT = {
   'cl.auxiliary': ['Auxiliary Clause', '辅助条文', '輔助條文'],
   'cl.original': ['Original Text', '原文', '原文'],
   'cl.annotations': ['Structured annotations', '结构化标注', '結構化標註'],
-  'cl.notice': [
-    'Automated annotations. Every structured record in v1.0 carries review_status = pending; manual review is in progress and no agreement statistics are reported in this version.',
-    '自动抽取标注。v1.0 中所有结构化记录的 review_status 均为 pending，人工审核进行中，本版本不报告一致性统计。',
-    '自動抽取標註。v1.0 中所有結構化記錄的 review_status 均為 pending，人工審核進行中，本版本不報告一致性統計。',
-  ],
-  'cl.notice.label': ['Review status', '审核状态', '審核狀態'],
   'cl.field.symptoms': ['Symptoms', '症状', '症狀'],
   'cl.field.negated': ['Negated findings', '否定表现', '否定表現'],
   'cl.field.pulse': ['Pulse', '脉象', '脈象'],

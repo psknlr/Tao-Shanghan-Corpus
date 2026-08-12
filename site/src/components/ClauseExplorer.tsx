@@ -110,13 +110,6 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         <TagField label={t('cl.field.collation')} values={clause.collation_notes} />
       </div>
 
-      <div className="notice">
-        <span aria-hidden>◆</span>
-        <span>
-          <strong>{t('cl.notice.label')}: </strong>
-          {t('cl.notice')}
-        </span>
-      </div>
     </div>
   )
 }

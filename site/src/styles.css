@@ -515,19 +515,6 @@ button { font: inherit; color: inherit; }
 .ann__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .ann__empty { font-size: 0.78rem; color: var(--ink-3); font-style: italic; }
 
-.notice {
-  display: flex;
-  gap: 0.6rem;
-  align-items: flex-start;
-  margin-top: 1.5rem;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid rgba(167, 135, 82, 0.32);
-  background: var(--gold-soft);
-  border-radius: var(--radius);
-  font-size: 0.775rem;
-  color: var(--ink-2);
-}
-.notice strong { color: var(--gold); font-weight: 600; }
 
 .formula { margin-top: 1.5rem; border: 1px solid var(--rule-soft); border-radius: var(--radius); overflow: hidden; }
 .formula__head { padding: 0.6rem 0.9rem; background: var(--cinnabar-soft); font-family: var(--han); font-size: 0.95rem; color: var(--cinnabar); border-bottom: 1px solid var(--rule-soft); }

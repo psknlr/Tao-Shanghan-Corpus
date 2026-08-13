@@ -25,14 +25,21 @@ jobs:
       - name: Source file checksums
         run: python3 code/verify_checksums.py
 
-      # Rebuild the editorial punctuation layer from its readings and prove the
-      # result only ever inserts marks into the released commentary text.
+      # Rebuild the derived layers from their sources and prove that neither
+      # alters a released record.
       - name: Editorial punctuation is insertion-only
         run: |
           python3 scripts/build_punctuation_layer.py
           git diff --exit-code -- 10_editorial_punctuation/ \
             || (echo "::error::10_editorial_punctuation/ is out of date; run scripts/build_punctuation_layer.py" && exit 1)
           python3 code/validate_punctuation.py
+
+      - name: Clause enrichment round-trips to the source text
+        run: |
+          python3 scripts/build_clause_enrichment.py
+          git diff --exit-code -- 11_clause_enrichment/ \
+            || (echo "::error::11_clause_enrichment/ is out of date; run scripts/build_clause_enrichment.py" && exit 1)
+          python3 code/validate_enrichment.py
 
       - name: Build the site payloads
         run: python3 scripts/build_demo_data.py

@@ -152,6 +152,15 @@ const DICT = {
   'cl.chapter': ['Chapter', '篇目', '篇目'],
   'cl.channel': ['Six-channel', '六经', '六經'],
   'cl.none': ['none recorded', '无', '無'],
+  'cl.composition': ['Formula composition', '方劑組成', '方劑組成'],
+  'cl.dose': ['dose and processing', '劑量與炮製', '劑量與炮製'],
+  'cl.collation': ['Collation notes carried in the edition', '本書所載校語', '本書所載校語'],
+  'cl.formula.unresolved': [
+    'The adjacent heading and this composition do not agree, so no formula name is attached.',
+    '相邻标题与本方组成不一致，故未标注方名。',
+    '相鄰標題與本方組成不一致，故未標註方名。',
+  ],
+  'cl.formula.heading': ['Adjacent heading', '相邻标题', '相鄰標題'],
   /** Prefix for a numbered clause, e.g. 條 23. Corpus text is never converted. */
   'cl.prefix': ['Clause', '条', '條'],
 

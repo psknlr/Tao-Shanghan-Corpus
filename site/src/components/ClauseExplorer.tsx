@@ -1,8 +1,56 @@
 import { useDeferredValue, useMemo, useState } from 'react'
 import { useI18n } from '../i18n'
 import { searchClauses } from '../data'
-import type { ClausePayload, FormulaBlock, SearchEntry } from '../types'
+import type { ClauseEnrichment, ClausePayload, ClauseSegment, FormulaBlock, SearchEntry } from '../types'
 import { ErrorBox, Loading, SectionHead, TagField } from './ui'
+
+/**
+ * Renders the clause with its inline markup typeset rather than printed: the
+ * transcription marks dose notes as <l> and collation notes as <j>, which would
+ * otherwise reach the reader as raw angle brackets.
+ */
+function ClauseText({ segments, text }: { segments?: ClauseSegment[]; text: string }) {
+  if (!segments?.length) return <p className="clause-text">{text}</p>
+  return (
+    <p className="clause-text">
+      {segments.map((segment, i) => {
+        if (segment.t === 'dose') return <span className="c-dose" key={i}>{segment.s}</span>
+        if (segment.t === 'note') return <span className="c-note" key={i}>{segment.s}</span>
+        if (segment.t === 'strong') return <strong className="c-strong" key={i}>{segment.s}</strong>
+        return <span key={i}>{segment.s}</span>
+      })}
+    </p>
+  )
+}
+
+/** Herb-by-herb view of a dose list that the released layer left unparsed. */
+function Composition({ enrichment }: { enrichment: ClauseEnrichment }) {
+  const { t } = useI18n()
+  return (
+    <div className="formula">
+      <div className="formula__head">
+        {enrichment.formula_name ?? t('cl.composition')}
+        <span className="formula__count mono">{enrichment.composition.length} 味</span>
+      </div>
+      <div className="formula__herbs">
+        {enrichment.composition.map((item, i) => (
+          <span className="herb" key={`${item.herb}-${i}`}>
+            <b>{item.herb}</b>
+            {item.dose_processing && <i>{item.dose_processing}</i>}
+          </span>
+        ))}
+      </div>
+      {!enrichment.formula_name && enrichment.adjacent_heading_text && (
+        <p className="formula__caveat">
+          {t('cl.formula.unresolved')}{' '}
+          <span className="muted">
+            {t('cl.formula.heading')}: <span className="han">{enrichment.adjacent_heading_text}</span>
+          </span>
+        </p>
+      )}
+    </div>
+  )
+}
 
 const HINTS = ['23', '桂枝湯', '惡寒', '發熱', '成無己', '太陽病', '大青龍湯', '脈浮']
 
@@ -40,6 +88,7 @@ function Formula({ block }: { block: FormulaBlock }) {
 export function ClausePanel({ payload }: { payload: ClausePayload }) {
   const { t, v, n } = useI18n()
   const clause = payload.clause
+  const enrichment = payload.enrichment
   const canonical = clause.canonical_clause_no !== null
 
   return (
@@ -64,7 +113,12 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         </div>
         <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
           {clause.six_channel && <span className="tag tag--cinnabar tag--han">{clause.six_channel}</span>}
-          {clause.formula_names.map((name) => (
+          {(clause.formula_names.length
+            ? clause.formula_names
+            : enrichment?.formula_name
+              ? [enrichment.formula_name]
+              : []
+          ).map((name) => (
             <span className="tag tag--jade tag--han" key={name}>
               {name}
             </span>
@@ -73,7 +127,7 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         </div>
       </div>
 
-      <p className="clause-text">{clause.original_text}</p>
+      <ClauseText segments={payload.enrichment?.segments} text={clause.original_text} />
 
       <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', fontSize: '0.78rem' }}>
         <span className="muted">
@@ -92,6 +146,9 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         <Formula block={block} key={`${block.formula_name}-${i}`} />
       ))}
 
+      {/* Present where the release itself extracted nothing from the markup. */}
+      {enrichment?.composition.length ? <Composition enrichment={enrichment} /> : null}
+
       <h4 style={{ marginTop: '2rem', fontSize: '0.9rem' }}>{t('cl.annotations')}</h4>
       <div className="ann-grid">
         <TagField label={t('cl.field.symptoms')} values={clause.symptoms} tone="cinnabar" />
@@ -99,7 +156,7 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         <TagField label={t('cl.field.negated')} values={clause.negated_findings} />
         <TagField label={t('cl.field.patterns')} values={clause.disease_patterns} />
         <TagField label={t('cl.field.formulae')} values={clause.formula_names} tone="gold" />
-        <TagField label={t('cl.field.herbs')} values={clause.herbs} />
+        <TagField label={t('cl.field.herbs')} values={clause.herbs.length ? clause.herbs : enrichment?.herbs ?? []} />
         <TagField label={t('cl.field.therapy')} values={clause.therapy_terms} />
         <TagField label={t('cl.field.contra')} values={clause.contraindication_terms} />
         <TagField label={t('cl.field.mistreat')} values={clause.mistreatment_terms} />
@@ -107,7 +164,10 @@ export function ClausePanel({ payload }: { payload: ClausePayload }) {
         <TagField label={t('cl.field.prognosis')} values={clause.prognosis_terms} />
         <TagField label={t('cl.field.time')} values={clause.time_course} />
         <TagField label={t('cl.field.logic')} values={clause.logic_words} />
-        <TagField label={t('cl.field.collation')} values={clause.collation_notes} />
+        <TagField
+          label={t('cl.field.collation')}
+          values={clause.collation_notes.length ? clause.collation_notes : enrichment?.collation_notes ?? []}
+        />
       </div>
 
     </div>

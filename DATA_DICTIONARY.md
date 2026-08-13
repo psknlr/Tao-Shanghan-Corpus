@@ -180,3 +180,32 @@ reproduce the record's `commentary_text` exactly. `code/validate_punctuation.py`
 this and runs in CI, so the layer cannot silently emend the corpus. Punctuating classical
 Chinese is interpretive; the unpunctuated original remains the released record in
 `04_commentaries/`, so the reading can be recomputed, compared or replaced.
+
+## `11_clause_enrichment/clause_enrichment.jsonl`
+
+Inline markup carried by the transcription (`<l>` dose notes, `<j>` collation notes, `**`
+heading emphasis), parsed into structured form. Covers the 46 clause records that contain
+markup. `03_clauses/clauses.jsonl` is not modified by this layer.
+
+| Field | Type | Description | Origin |
+|---|---|---|---|
+| `enrichment_id` | string | `ENR_` + the clause identifier | computed |
+| `clause_id` | string | Clause this record enriches | computed |
+| `source_id` | string | Owning work, copied from the clause record | computed |
+| `chapter` | string | Chapter heading, copied from the clause record | provenance |
+| `base_sha256` | string | SHA-256 of the `original_text` this record was derived from | computed |
+| `display_text` | string | The clause with its markup removed and every other character kept | computed |
+| `segments` | array | Typed runs: `text`, `dose` (`<l>`), `note` (`<j>`), `strong` (`**`) | computed |
+| `record_kind` | string | `formula_composition`, `formula_heading` or `clause_with_collation_notes` | computed |
+| `composition` | array | `{herb, dose_processing}` parsed from the dose list | computed |
+| `herbs` | array | Distinct herb names in the composition | computed |
+| `collation_notes` | array | The `<j>` contents, in order | computed |
+| `formula_name` | string\|null | Formula name, or null when it cannot be evidenced | computed |
+| `formula_name_evidence` | string | `adjacent_heading:<clause_id>`, `unresolved` or `no_adjacent_heading` | provenance |
+| `adjacent_heading_text` | string | The heading text, recorded when the name is unresolved | provenance |
+| `method` | string | `deterministic_markup_parse` | provenance |
+
+**Invariants**, enforced by `code/validate_enrichment.py` in CI: concatenating the
+`segments` reproduces `display_text`; rebuilding the markup from `composition` reproduces
+the clause's `original_text` exactly; `collation_notes` are exactly the `<j>` contents in
+order; a `formula_name` is never set without `adjacent_heading:` evidence.

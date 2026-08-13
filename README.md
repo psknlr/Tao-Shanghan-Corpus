@@ -109,10 +109,15 @@ and 傷寒論_千金翼方版 (237).
 07_unified_records/    unified_text_records.jsonl  4,255 records
 08_manual_review/      review tables, sampling manifest, annotation guideline
 09_validation/         schema, integrity, provenance and duplicate reports
+10_editorial_punctuation/  句讀 for the one work transmitted unpunctuated   37 records
+11_clause_enrichment/  inline markup parsed into structured form            46 records
 code/                  validation and checksum scripts
-scripts/               build_demo_data.py — derives the site payloads
+scripts/               derive the site payloads and the two derived layers
 site/                  React + Vite source of the GitHub Pages explorer
 ```
+
+The two derived layers never modify the released text they are derived from; each has a
+validator in `code/` that proves it, and both run in CI.
 
 Every field is documented in [`DATA_DICTIONARY.md`](DATA_DICTIONARY.md), which tags each
 field by origin: `curated`, `computed`, `automated`, `provenance` or `review`.
@@ -215,6 +220,44 @@ python3 code/validate_schema.py
 python3 code/validate_relations.py
 python3 code/verify_checksums.py
 ```
+
+## Inline markup and clause enrichment
+
+The Song-edition transcription carries three kinds of inline markup that the structured
+layer passes through untouched, so they reached a reader as raw source:
+
+| Markup | Meaning | Occurrences |
+|---|---|---|
+| `<l>…</l>` | dose and processing note on the preceding herb — `桂枝<l>一兩十七銖，去皮</l>` | 60, in 10 records |
+| `<j>…</j>` | collation note carried in the edition's small type — `陽脈浮<j>一作微</j>` | 14, in 11 records |
+| `**…**` | emphasis on a formula heading — `**桂枝二麻黃一湯方**` | 25 records |
+
+Nine of the ten dose-list records also carried **no extracted herbs at all**, because the
+extractor did not read through the markup: `SHL_SONGBEN_AUX_0235` is a seven-herb
+composition whose `herbs`, `formula_names` and `formula_blocks` were all empty.
+
+[`scripts/build_clause_enrichment.py`](scripts/build_clause_enrichment.py) parses that
+markup — a mechanical operation — into
+[`11_clause_enrichment/clause_enrichment.jsonl`](11_clause_enrichment/), giving each
+affected clause typed text runs, and for dose lists a herb-by-herb composition:
+
+```
+46 records   9 compositions · 63 herbs · 14 collation notes · 8 formula names attributed
+```
+
+`03_clauses/clauses.jsonl` is not modified. [`code/validate_enrichment.py`](code/validate_enrichment.py)
+re-derives the plain reading from the segments and requires it to equal the clause with its
+markup removed, rebuilds the original dose list from the composition character for
+character, and checks each record against a stored `base_sha256`. It runs in CI.
+
+**A formula name is only attached where it is evidenced.** It is taken from the
+immediately preceding heading record, and only when the released layer itself already
+resolved that heading to a name. One record fails that test and is left unnamed:
+
+> `SHL_SONGBEN_AUX_0276` — the heading reads 四逆加吳茱萸生薑湯方, but the composition is
+> 當歸、芍藥、甘草、通草、桂枝、細辛、生薑、大棗、吳茱萸 (九味, decocted with 清酒), which is
+> **當歸四逆加吳茱萸生薑湯**. The heading appears to drop 當歸. The disagreement is recorded
+> in the layer and shown on the site rather than resolved silently.
 
 ## Editorial punctuation (句讀)
 

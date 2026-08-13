@@ -130,6 +130,14 @@ def build(root: Path, out: Path) -> None:
 
     validation = json.loads((root / "09_validation" / "validation_report.json").read_text(encoding="utf-8"))
 
+    # Clause enrichment re-presents the inline markup a few clause records carry;
+    # optional, like the punctuation overlay below.
+    enrichment_path = root / "11_clause_enrichment" / "clause_enrichment.jsonl"
+    enrichment = {
+        record["clause_id"]: record
+        for record in (read_jsonl(enrichment_path) if enrichment_path.exists() else [])
+    }
+
     # Editorial punctuation is an optional overlay: absent for most works, and
     # absent entirely if the layer has not been built.
     punctuation_path = root / "10_editorial_punctuation" / "punctuation.jsonl"
@@ -384,13 +392,16 @@ def build(root: Path, out: Path) -> None:
         cid = clause["clause_id"]
         clause_commentaries = commentaries_by_clause.get(cid, [])
         commentators = sorted({c["commentator"] for c in clause_commentaries})
+        enriched = enrichment.get(cid)
         index.append({
             "id": cid,
             "no": clause["canonical_clause_no"],
             "type": clause["text_type"],
             "chapter": clause["chapter"],
             "six_channel": clause["six_channel"],
-            "text": clause["original_text"],
+            # Search and snippets read the markup-free text so no result ever
+            # shows a raw <l> or ** to the reader.
+            "text": enriched["display_text"] if enriched else clause["original_text"],
             "formulae": clause.get("formula_names", []),
             "symptoms": clause.get("symptoms", []),
             "pulse": clause.get("pulse", []),
@@ -423,10 +434,11 @@ def build(root: Path, out: Path) -> None:
     def clause_label(clause_id: str) -> dict:
         target = clause_by_id.get(clause_id)
         if target:
+            enriched_label = enrichment.get(clause_id)
             return {
                 "id": clause_id,
                 "no": target["canonical_clause_no"],
-                "text": target["original_text"],
+                "text": enriched_label["display_text"] if enriched_label else target["original_text"],
                 "formulae": target.get("formula_names", []),
                 "six_channel": target["six_channel"],
             }
@@ -589,8 +601,24 @@ def build(root: Path, out: Path) -> None:
             ],
         }
 
+        enriched = enrichment.get(cid)
         payload = {
             "clause": clause,
+            "enrichment": (
+                {
+                    "display_text": enriched["display_text"],
+                    "segments": enriched["segments"],
+                    "record_kind": enriched.get("record_kind", ""),
+                    "composition": enriched.get("composition", []),
+                    "herbs": enriched.get("herbs", []),
+                    "collation_notes": enriched.get("collation_notes", []),
+                    "formula_name": enriched.get("formula_name"),
+                    "formula_name_evidence": enriched.get("formula_name_evidence", ""),
+                    "adjacent_heading_text": enriched.get("adjacent_heading_text", ""),
+                }
+                if enriched
+                else None
+            ),
             "work": source_brief(clause["source_id"]),
             "commentaries": commentary_payload,
             "variants": variant_payload,

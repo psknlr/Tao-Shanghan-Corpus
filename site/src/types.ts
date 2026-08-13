@@ -269,8 +269,25 @@ export interface ProvenanceChain {
   checks: { key: string; ok: boolean }[]
 }
 
+/** One typed run of clause text: plain, a dose note, a collation note, emphasis. */
+export type ClauseSegment = { t: 'text' | 'dose' | 'note' | 'strong'; s: string }
+
+/** Derived in 11_clause_enrichment/ from the inline markup the transcription carries. */
+export interface ClauseEnrichment {
+  display_text: string
+  segments: ClauseSegment[]
+  record_kind: string
+  composition: { herb: string; dose_processing: string }[]
+  herbs: string[]
+  collation_notes: string[]
+  formula_name: string | null
+  formula_name_evidence: string
+  adjacent_heading_text: string
+}
+
 export interface ClausePayload {
   clause: Clause
+  enrichment: ClauseEnrichment | null
   work: { source_id: string; title_zh: string; title_translit: string; author: string; dynasty: string }
   commentaries: CommentaryRecord[]
   variants: VariantRecord[]

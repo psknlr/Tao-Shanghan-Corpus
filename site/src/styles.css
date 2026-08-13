@@ -516,8 +516,47 @@ button { font: inherit; color: inherit; }
 .ann__empty { font-size: 0.78rem; color: var(--ink-3); font-style: italic; }
 
 
+/* Inline markup the transcription carries, typeset instead of printed:
+   <l> dose notes ride at the size the edition sets them in, <j> collation notes
+   are set off in gold, ** emphasis stays a heading. */
+.c-dose {
+  font-size: 0.76em;
+  color: var(--ink-2);
+  padding: 0 0.15em;
+  white-space: nowrap;
+}
+.c-dose::before { content: "（"; opacity: 0.5; }
+.c-dose::after { content: "）"; opacity: 0.5; }
+.c-note {
+  font-size: 0.76em;
+  color: var(--gold);
+  padding: 0 0.15em;
+}
+.c-note::before { content: "〔"; opacity: 0.65; }
+.c-note::after { content: "〕"; opacity: 0.65; }
+.c-strong { font-weight: 600; color: var(--cinnabar); }
+
 .formula { margin-top: 1.5rem; border: 1px solid var(--rule-soft); border-radius: var(--radius); overflow: hidden; }
-.formula__head { padding: 0.6rem 0.9rem; background: var(--cinnabar-soft); font-family: var(--han); font-size: 0.95rem; color: var(--cinnabar); border-bottom: 1px solid var(--rule-soft); }
+.formula__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--cinnabar-soft);
+  font-family: var(--han);
+  font-size: 0.95rem;
+  color: var(--cinnabar);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.formula__count { color: var(--ink-3); font-size: 0.68rem; }
+.formula__caveat {
+  padding: 0 0.9rem 0.9rem;
+  font-size: 0.75rem;
+  color: var(--gold);
+  line-height: 1.7;
+}
 .formula__herbs { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.85rem 0.9rem; }
 .herb { border: 1px solid var(--rule-soft); border-radius: var(--radius); padding: 0.3rem 0.55rem; background: var(--surface-2); }
 .herb b { font-family: var(--han); font-size: 0.85rem; font-weight: 500; }

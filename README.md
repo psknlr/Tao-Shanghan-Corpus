@@ -301,6 +301,29 @@ python3 scripts/build_punctuation_layer.py   # refuses to write a non-insertion-
 python3 code/validate_punctuation.py
 ```
 
+## Figures
+
+[`figures/`](figures/) holds the four figures of the data descriptor, drawn by
+[`scripts/make_figures.py`](scripts/make_figures.py) directly from the released files.
+
+| Figure | Content |
+|---|---|
+| [Fig. 1](figures/fig1.pdf) | Construction workflow and the provenance chain of one record |
+| [Fig. 2](figures/fig2.pdf) | Composition of the source catalogue and annotation of the canonical clauses |
+| [Fig. 3](figures/fig3.pdf) | Data model, relation types, and every record linked to clause 23 |
+| [Fig. 4](figures/fig4.pdf) | Clause coverage by commentary and witness, and the alignment scores |
+
+Each is supplied as a vector PDF (text live, fonts embedded) and an 800-dpi PNG at the
+Nature Portfolio double-column width of 183 mm. The legends are in
+[`figures/LEGENDS.md`](figures/LEGENDS.md). Every number in a figure or legend is computed
+from the data when the script runs, and each figure is audited for type size, stroke
+weight, colour and page size before it is written, so the script fails rather than
+emitting an off-specification figure. Rebuilds are byte-identical.
+
+```bash
+python3 scripts/make_figures.py   # matplotlib, numpy, Pillow, fontTools; Arial and a CJK font
+```
+
 ## Download counts
 
 Downloads are counted, and the running total is shown in the Data Access section of the
